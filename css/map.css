@@ -47,9 +47,22 @@
   stroke-width: 1;
 }
 
+.map-lane-line {
+  stroke: rgba(121, 240, 198, 0.2);
+  stroke-width: 1.4;
+  stroke-dasharray: 6 6;
+}
+
+.map-lane-label {
+  fill: rgba(201, 224, 248, 0.75);
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 12px;
+}
+
 .map-connection {
   stroke: rgba(146, 171, 204, 0.55);
   stroke-width: 2;
+  fill: none;
 }
 
 .map-node {

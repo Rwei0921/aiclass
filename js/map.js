@@ -23,6 +23,14 @@ var MAP_ERA_GROUPS = [
   { key: "2020s", label: "2020s+", start: 2020, end: 2100 }
 ];
 
+var MAP_CATEGORY_LANES = {
+  theory: { y: 110, label: "理論基礎" },
+  model: { y: 200, label: "模型架構" },
+  training: { y: 290, label: "訓練方法" },
+  breakthrough: { y: 380, label: "應用突破" },
+  winter: { y: 500, label: "AI 寒冬" }
+};
+
 var NOTEBOOK_CONTENT = {};
 
 function escapeHTML(value) {
@@ -135,6 +143,46 @@ function getVisibleNodes() {
   });
 }
 
+function getNodeRenderPosition(node) {
+  var lane = MAP_CATEGORY_LANES[node.category];
+  if (!lane) {
+    return { x: node.position.x, y: node.position.y };
+  }
+
+  var offsetSeed = (node.year + node.id.length) % 3;
+  var yOffset = (offsetSeed - 1) * 12;
+  return {
+    x: node.position.x,
+    y: lane.y + yOffset
+  };
+}
+
+function renderCategoryLanes(svg) {
+  var laneLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  laneLayer.setAttribute("class", "map-lane-layer");
+
+  Object.keys(MAP_CATEGORY_LANES).forEach(function (key) {
+    var lane = MAP_CATEGORY_LANES[key];
+
+    var laneLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    laneLine.setAttribute("x1", 40);
+    laneLine.setAttribute("y1", lane.y);
+    laneLine.setAttribute("x2", 1460);
+    laneLine.setAttribute("y2", lane.y);
+    laneLine.setAttribute("class", "map-lane-line");
+    laneLayer.appendChild(laneLine);
+
+    var laneText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    laneText.setAttribute("x", 44);
+    laneText.setAttribute("y", lane.y - 8);
+    laneText.setAttribute("class", "map-lane-label");
+    laneText.textContent = lane.label;
+    laneLayer.appendChild(laneText);
+  });
+
+  svg.appendChild(laneLayer);
+}
+
 function renderEraButtons() {
   var container = document.getElementById("era-filter");
   if (!container) {
@@ -189,6 +237,7 @@ function renderMap() {
     gridLayer.appendChild(line);
   }
   svg.appendChild(gridLayer);
+  renderCategoryLanes(svg);
 
   var connectionLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
   visibleNodes.forEach(function (node) {
@@ -202,22 +251,32 @@ function renderMap() {
       if (!target || target.year < node.year) {
         return;
       }
-      var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      line.setAttribute("class", "map-connection");
-      line.setAttribute("x1", node.position.x);
-      line.setAttribute("y1", node.position.y);
-      line.setAttribute("x2", target.position.x);
-      line.setAttribute("y2", target.position.y);
-      connectionLayer.appendChild(line);
+
+      var fromPos = getNodeRenderPosition(node);
+      var toPos = getNodeRenderPosition(target);
+      var dx = toPos.x - fromPos.x;
+      var bend = Math.max(35, Math.min(130, Math.abs(dx) * 0.35));
+
+      var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("class", "map-connection");
+      path.setAttribute(
+        "d",
+        "M " + fromPos.x + " " + fromPos.y +
+          " C " + (fromPos.x + bend) + " " + fromPos.y +
+          " " + (toPos.x - bend) + " " + toPos.y +
+          " " + toPos.x + " " + toPos.y
+      );
+      connectionLayer.appendChild(path);
     });
   });
   svg.appendChild(connectionLayer);
 
   var nodeLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
   visibleNodes.forEach(function (node) {
+    var nodePos = getNodeRenderPosition(node);
     var group = document.createElementNS("http://www.w3.org/2000/svg", "g");
     group.setAttribute("class", "map-node" + (MAP_STATE.selectedNodeId === node.id ? " active" : ""));
-    group.setAttribute("transform", "translate(" + node.position.x + " " + node.position.y + ")");
+    group.setAttribute("transform", "translate(" + nodePos.x + " " + nodePos.y + ")");
 
     var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("r", 13);
