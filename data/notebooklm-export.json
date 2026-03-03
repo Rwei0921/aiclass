@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-03-04",
+  "nodes": [
+    {
+      "nodeId": "turing-test",
+      "title": "圖靈測試",
+      "summary": "圖靈測試由英國電腦科學家艾倫·圖靈於1950年提出，旨在檢驗機器是否具備與人類無法區分的智慧。在測試中，人類詢問者透過純文字分別向一真人與一機器提問，若最終無法可靠地分辨兩者身分，機器即算通過測試。此概念深遠影響人工智慧哲學與發展，但也面臨諸如中文房間等批評，質疑其無法證明機器具備真正的意識或理解能力。",
+      "videoUrl": "assets/videos/圖靈測試：深入解析.mp4",
+      "sources": [
+        {
+          "title": "Turing test - Wikipedia",
+          "url": "https://en.wikipedia.org/w/index.php?title=Turing_test&oldid=1340513247",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "圖靈測試 - 維基百科，自由的百科全書",
+          "url": "https://zh.wikipedia.org/w/index.php?title=图灵测试&oldid=91660333",
+          "publisher": "維基百科",
+          "year": 2026
+        },
+        {
+          "title": "NotebookLM 影片摘要 Artifact",
+          "url": "https://notebooklm.google.com/notebook/dc99629a-29d8-434e-9e67-307cae07dc22?artifactId=8559f0ab-bc7f-4ad2-aa2b-11e3c651e9a3"
+        },
+        {
+          "title": "本地影片檔：圖靈測試深入解析",
+          "url": "assets/videos/圖靈測試：深入解析.mp4"
+        },
+        {
+          "title": "NotebookLM 筆記連結",
+          "url": "https://notebooklm.google.com/notebook/dc99629a-29d8-434e-9e67-307cae07dc22"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    }
+  ]
+}

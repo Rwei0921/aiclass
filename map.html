@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Explorer | 互動 AI 地圖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/map.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">AI Explorer<small>互動式 AI 地圖</small></a>
+      <nav class="nav" aria-label="主導覽">
+        <a class="nav-link" href="index.html">首頁</a>
+        <a class="nav-link" href="map.html">AI 地圖</a>
+        <a class="nav-link" href="topics.html">主題索引</a>
+        <a class="nav-link" href="about.html">關於</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-header">
+      <span class="eyebrow">Core Page</span>
+      <h1>互動 AI 地圖</h1>
+      <p class="lead">點擊左側節點，右側會顯示技術說明、代表人物、生活應用與小測驗。可用滑鼠滾輪縮放、拖曳平移。</p>
+      <div class="era-filter" id="era-filter"></div>
+    </section>
+
+    <section class="map-layout">
+      <article class="panel map-canvas">
+        <svg id="map-svg" class="map-svg" role="img" aria-label="AI 歷史地圖"></svg>
+      </article>
+      <aside id="map-panel" class="panel map-panel">
+        <h3>載入中...</h3>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">提示：先選時間區段，再點節點會更容易建立技術脈絡。</div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/map.js"></script>
+</body>
+</html>
