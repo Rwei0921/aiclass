@@ -1,6 +1,6 @@
 /**
  * AI Explorer — 節點資料庫
- * 包含 22 個 AI 歷史關鍵節點的完整資料
+ * 包含 25 個 AI 歷史關鍵節點的完整資料
  */
 
 const AI_NODES = [
@@ -511,20 +511,20 @@ const AI_NODES = [
     nameEn: "ChatGPT",
     category: "breakthrough",
     tagline: "AI 走進每個人的生活",
-    description: "OpenAI 的 ChatGPT 基於 GPT-3.5/4，結合 RLHF（人類回饋強化學習）讓 AI 更聽話、更安全。上線 5 天達百萬用戶，2 個月突破一億，改變了全球對 AI 的認識。",
+    description: "OpenAI 在 2022 年推出 ChatGPT，讓大型語言模型第一次以聊天介面的形式大規模進入大眾生活。它不只會回答問題，還能寫摘要、翻譯、生成程式碼與協助腦力激盪；加上 RLHF（人類回饋強化學習）後，整體對話更自然，也更符合人類期待。ChatGPT 的爆紅讓全球重新認識生成式 AI，並快速帶動教育、辦公、客服與開發工具的全面改變。",
     youtubeId: "0uQqMxXoNVs",
-    figure: "OpenAI（Sam Altman 等），2022 年 11 月 30 日上線",
-    applications: ["客服機器人", "程式設計助理", "寫作輔助", "教育輔導"],
-    misconception: "ChatGPT 不總是正確的，它可能「自信地說出錯誤資訊」（幻覺問題），使用時需要查證。",
+    figure: "OpenAI 團隊（Sam Altman、Mira Murati、Ilya Sutskever 等），2022 年 11 月 30 日正式上線",
+    applications: ["智慧客服與 FAQ", "程式設計助理", "寫作摘要與翻譯", "教育輔導與問答", "知識工作輔助"],
+    misconception: "ChatGPT 很擅長生成像人寫的答案，但這不代表它每次都正確；它仍可能出現幻覺、引用錯誤或過度自信的回答。",
     quiz: {
-      question: "ChatGPT 和 GPT-3 的最大差異是什麼？",
+      question: "ChatGPT 為什麼會成為生成式 AI 的重要轉折點？",
       options: [
-        "A. ChatGPT 有更多參數",
-        "B. ChatGPT 使用人類回饋訓練，讓對話更自然安全",
-        "C. ChatGPT 可以連接網路"
+        "A. 它把大型語言模型變成一般人也能直接使用的聊天產品",
+        "B. 它是第一個會上網搜尋的 AI",
+        "C. 它完全不會產生錯誤資訊"
       ],
-      answer: 1,
-      explanation: "RLHF（人類回饋強化學習）讓 ChatGPT 更善於對話，也更不容易說有害的內容。"
+      answer: 0,
+      explanation: "ChatGPT 的歷史意義在於把原本偏研究或開發者導向的模型，轉成全民可直接體驗的產品，從而引爆生成式 AI 熱潮。"
     },
     connections: ["multimodal"],
     position: { x: 1250, y: 250 }
@@ -536,23 +536,98 @@ const AI_NODES = [
     nameEn: "Multimodal AI",
     category: "breakthrough",
     tagline: "同時看、聽、說的 AI",
-    description: "GPT-4V、Gemini、Claude 3 等多模態 AI 能同時處理文字、圖像、音訊、影片，標誌著 AI 從「單一感知」進化為「整合感知」，更接近人類的理解方式。",
+    description: "2023 年之後，多模態 AI 成為新一波關鍵趨勢。這類模型不再只處理文字，而能同時理解圖片、聲音、文件、影片甚至畫面截圖，讓 AI 從『讀文字』進化到『綜合理解多種資訊』。像 GPT-4V、Gemini 與後續多模態系統，讓使用者可以直接上傳圖片發問、讓 AI 看圖解題、讀表格、分析介面或結合語音互動，應用範圍明顯擴大。",
     youtubeId: "tGEf-bGMdoY",
-    figure: "OpenAI GPT-4（2023）、Google Gemini（2023）、Anthropic Claude 3（2024）",
-    applications: ["圖片 + 文字問答", "影片理解", "語音+視覺整合助理"],
-    misconception: "Multimodal AI 強大但仍有幻覺問題，且對圖像內容的理解有時仍不如人類直覺。",
+    figure: "OpenAI GPT-4V、Google Gemini、Anthropic Claude 多模態能力發展",
+    applications: ["圖片與文字問答", "文件與圖表理解", "影片與畫面分析", "語音互動助理", "視覺輔助工具"],
+    misconception: "多模態 AI 看起來像真的『看懂』世界，但它對圖像細節、空間關係與情境推論仍可能出錯，不等於完全具有人類理解力。",
     quiz: {
-      question: "Multimodal AI 比傳統語言模型的優勢是什麼？",
+      question: "多模態 AI 和傳統純文字模型最大的差異是什麼？",
       options: [
-        "A. 計算速度更快",
-        "B. 能同時處理圖像、文字、音頻等多種類型的資訊",
-        "C. 參數數量更少"
+        "A. 能整合圖片、文字、音訊等不同形式的資訊",
+        "B. 一定比純文字模型更小更省資源",
+        "C. 完全不需要訓練資料"
       ],
-      answer: 1,
-      explanation: "跨模態理解讓 AI 能做「看圖說話」、「聽音辨義」等更接近人類認知的任務。"
+      answer: 0,
+      explanation: "多模態模型的核心優勢是跨模態理解，也就是把不同型態的資訊放在一起分析，而不是只看文字。"
     },
-    connections: [],
+    connections: ["reasoning-models"],
     position: { x: 1330, y: 200 }
+  },
+  {
+    id: "reasoning-models",
+    year: 2024,
+    name: "推理型模型",
+    nameEn: "Reasoning Models",
+    category: "breakthrough",
+    tagline: "從直接回答走向分步思考",
+    description: "2024 年開始，AI 發展重點逐漸從『會說很多』轉向『能不能更好地思考』。推理型模型強調多步驟問題拆解、較穩定的邏輯過程，以及在數學、規劃、程式設計與複雜任務上的表現提升。這代表大語言模型正在從單純的文字生成工具，朝向更可靠的問題求解系統前進，也為後續 Agent 與工具調用打下基礎。",
+    youtubeId: "",
+    figure: "OpenAI、Google DeepMind、Anthropic 等主要模型團隊持續強化推理能力",
+    applications: ["數學與邏輯解題", "程式除錯與規劃", "複雜任務拆解", "研究分析輔助"],
+    misconception: "推理型模型並不是擁有人類意識的『思考者』，而是更擅長在模型內部模擬步驟化求解，結果仍可能錯誤。",
+    quiz: {
+      question: "推理型模型在 2024 年受到重視的主要原因是什麼？",
+      options: [
+        "A. 它們更擅長處理多步驟、需要規劃與邏輯的問題",
+        "B. 它們完全取代了所有搜尋引擎",
+        "C. 它們不再需要任何算力資源"
+      ],
+      answer: 0,
+      explanation: "這一類模型的重要性在於更擅長處理需要拆解、規劃與推理的任務，而不只是產生流暢文字。"
+    },
+    connections: ["multimodal", "ai-agents"],
+    position: { x: 1360, y: 230 }
+  },
+  {
+    id: "ai-agents",
+    year: 2025,
+    name: "AI Agents",
+    nameEn: "AI Agents",
+    category: "breakthrough",
+    tagline: "從聊天走向主動執行任務",
+    description: "2025 年的代表性方向之一，是 AI Agent 從概念走向實際應用。Agent 不只是回答一句問題，而是能接收目標後自行拆解步驟、呼叫外部工具、查找資料、讀寫檔案，甚至在多輪流程中持續完成任務。這讓 AI 從『聊天機器人』進一步變成『可執行工作的數位助理』，也是企業導入 AI 自動化的重要轉折點。",
+    youtubeId: "",
+    figure: "各大 AI 平台、MCP/工具調用生態與企業自動化系統",
+    applications: ["自動化工作流程", "研究與搜尋助理", "程式開發協作", "客服流程處理", "跨工具任務執行"],
+    misconception: "AI Agent 不是完全自治的智慧體，它通常仍受模型能力、工具權限、流程設計與人類監督所限制。",
+    quiz: {
+      question: "AI Agent 相比一般聊天機器人，最大的進步是什麼？",
+      options: [
+        "A. 能規劃、調用工具並持續執行多步驟任務",
+        "B. 只能回覆更長的文字",
+        "C. 完全不需要人類設定目標"
+      ],
+      answer: 0,
+      explanation: "Agent 的關鍵不是更會聊天，而是能串接工具、分解步驟並持續完成整段工作流程。"
+    },
+    connections: ["reasoning-models", "ai-native-workflows"],
+    position: { x: 1385, y: 250 }
+  },
+  {
+    id: "ai-native-workflows",
+    year: 2026,
+    name: "AI Native Workflows",
+    nameEn: "AI Native Workflows",
+    category: "breakthrough",
+    tagline: "AI 成為工作流程的一部分",
+    description: "到了 2026 年，AI 的競爭重點更可能從『單一模型能力』進一步轉向『能否穩定地嵌入真實工作流程』。AI Native Workflow 指的是搜尋、寫作、資料分析、設計、簡報與程式開發等流程從一開始就把 AI 當成協作者，而不是事後外掛。這代表生成式 AI 開始從新奇工具變成基礎生產力設施，重點也從模型展示轉向可靠性、整合性與人機協作效率。",
+    youtubeId: "",
+    figure: "生成式 AI 平台、辦公軟體、設計工具與開發環境整合生態",
+    applications: ["AI 協作辦公", "智慧分析與報告流程", "AI 輔助設計", "AI 輔助開發", "跨系統知識工作整合"],
+    misconception: "AI 融入工作流程不代表人類會被完全取代；真正重要的是分工、驗證、責任歸屬與使用者判斷。",
+    quiz: {
+      question: "AI Native Workflow 這個概念最強調哪一點？",
+      options: [
+        "A. 讓 AI 從一開始就被整合進真實工作流程",
+        "B. 只追求模型參數越大越好",
+        "C. 讓工作完全不需要驗證"
+      ],
+      answer: 0,
+      explanation: "AI Native Workflow 的核心不是單次炫技，而是讓 AI 成為流程中的穩定合作夥伴，提升實際工作效率。"
+    },
+    connections: ["ai-agents"],
+    position: { x: 1410, y: 270 }
   }
 ];
 
