@@ -1,7 +1,7 @@
 var MAP_STATE = {
   selectedNodeId: null,
   currentEra: "all",
-  viewBox: { x: 0, y: 0, w: 1500, h: 620 },
+  viewBox: { x: 0, y: 0, w: 1100, h: 1600 },
   dragging: false,
   dragStart: null
 };
@@ -23,12 +23,19 @@ var MAP_ERA_GROUPS = [
   { key: "2020s", label: "2020s+", start: 2020, end: 2100 }
 ];
 
-var MAP_CATEGORY_LANES = {
-  theory: { y: 110, label: "理論基礎" },
-  model: { y: 200, label: "模型架構" },
-  training: { y: 290, label: "訓練方法" },
-  breakthrough: { y: 380, label: "應用突破" },
-  winter: { y: 500, label: "AI 寒冬" }
+var MAP_CATEGORY_COLUMNS = {
+  theory: { x: 150, label: "理論基礎" },
+  model: { x: 360, label: "模型架構" },
+  training: { x: 570, label: "訓練方法" },
+  breakthrough: { x: 780, label: "應用突破" },
+  winter: { x: 970, label: "AI 寒冬" }
+};
+
+var MAP_YEAR_LAYOUT = {
+  start: 1950,
+  end: 2023,
+  top: 130,
+  bottom: 1480
 };
 
 var NOTEBOOK_CONTENT = {};
@@ -144,16 +151,20 @@ function getVisibleNodes() {
 }
 
 function getNodeRenderPosition(node) {
-  var lane = MAP_CATEGORY_LANES[node.category];
-  if (!lane) {
+  var column = MAP_CATEGORY_COLUMNS[node.category];
+  if (!column) {
     return { x: node.position.x, y: node.position.y };
   }
 
   var offsetSeed = (node.year + node.id.length) % 3;
-  var yOffset = (offsetSeed - 1) * 12;
+  var xOffset = (offsetSeed - 1) * 18;
+  var totalYears = MAP_YEAR_LAYOUT.end - MAP_YEAR_LAYOUT.start;
+  var yRatio = totalYears > 0 ? (node.year - MAP_YEAR_LAYOUT.start) / totalYears : 0;
+  var y = MAP_YEAR_LAYOUT.top + yRatio * (MAP_YEAR_LAYOUT.bottom - MAP_YEAR_LAYOUT.top);
+
   return {
-    x: node.position.x,
-    y: lane.y + yOffset
+    x: column.x + xOffset,
+    y: y
   };
 }
 
@@ -161,24 +172,45 @@ function renderCategoryLanes(svg) {
   var laneLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
   laneLayer.setAttribute("class", "map-lane-layer");
 
-  Object.keys(MAP_CATEGORY_LANES).forEach(function (key) {
-    var lane = MAP_CATEGORY_LANES[key];
+  Object.keys(MAP_CATEGORY_COLUMNS).forEach(function (key) {
+    var column = MAP_CATEGORY_COLUMNS[key];
 
     var laneLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    laneLine.setAttribute("x1", 40);
-    laneLine.setAttribute("y1", lane.y);
-    laneLine.setAttribute("x2", 1460);
-    laneLine.setAttribute("y2", lane.y);
+    laneLine.setAttribute("x1", column.x);
+    laneLine.setAttribute("y1", 70);
+    laneLine.setAttribute("x2", column.x);
+    laneLine.setAttribute("y2", 1525);
     laneLine.setAttribute("class", "map-lane-line");
     laneLayer.appendChild(laneLine);
 
     var laneText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    laneText.setAttribute("x", 44);
-    laneText.setAttribute("y", lane.y - 8);
+    laneText.setAttribute("x", column.x);
+    laneText.setAttribute("y", 46);
+    laneText.setAttribute("text-anchor", "middle");
     laneText.setAttribute("class", "map-lane-label");
-    laneText.textContent = lane.label;
+    laneText.textContent = column.label;
     laneLayer.appendChild(laneText);
   });
+
+  for (var year = 1950; year <= 2020; year += 10) {
+    var ratio = (year - MAP_YEAR_LAYOUT.start) / (MAP_YEAR_LAYOUT.end - MAP_YEAR_LAYOUT.start);
+    var y = MAP_YEAR_LAYOUT.top + ratio * (MAP_YEAR_LAYOUT.bottom - MAP_YEAR_LAYOUT.top);
+
+    var yearLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    yearLine.setAttribute("x1", 70);
+    yearLine.setAttribute("y1", y);
+    yearLine.setAttribute("x2", 1030);
+    yearLine.setAttribute("y2", y);
+    yearLine.setAttribute("class", "map-year-line");
+    laneLayer.appendChild(yearLine);
+
+    var yearText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    yearText.setAttribute("x", 76);
+    yearText.setAttribute("y", y - 10);
+    yearText.setAttribute("class", "map-year-label");
+    yearText.textContent = String(year);
+    laneLayer.appendChild(yearText);
+  }
 
   svg.appendChild(laneLayer);
 }
@@ -228,12 +260,12 @@ function renderMap() {
 
   var gridLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
   gridLayer.setAttribute("class", "map-grid");
-  for (var x = 100; x <= 1450; x += 100) {
+  for (var x = 80; x <= 1040; x += 80) {
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("x1", x);
-    line.setAttribute("y1", 20);
+    line.setAttribute("y1", 30);
     line.setAttribute("x2", x);
-    line.setAttribute("y2", 600);
+    line.setAttribute("y2", 1540);
     gridLayer.appendChild(line);
   }
   svg.appendChild(gridLayer);
@@ -254,16 +286,16 @@ function renderMap() {
 
       var fromPos = getNodeRenderPosition(node);
       var toPos = getNodeRenderPosition(target);
-      var dx = toPos.x - fromPos.x;
-      var bend = Math.max(35, Math.min(130, Math.abs(dx) * 0.35));
+      var dy = toPos.y - fromPos.y;
+      var bend = Math.max(45, Math.min(150, Math.abs(dy) * 0.28));
 
       var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute("class", "map-connection");
       path.setAttribute(
         "d",
         "M " + fromPos.x + " " + fromPos.y +
-          " C " + (fromPos.x + bend) + " " + fromPos.y +
-          " " + (toPos.x - bend) + " " + toPos.y +
+          " C " + fromPos.x + " " + (fromPos.y + bend) +
+          " " + toPos.x + " " + (toPos.y - bend) +
           " " + toPos.x + " " + toPos.y
       );
       connectionLayer.appendChild(path);
@@ -279,12 +311,13 @@ function renderMap() {
     group.setAttribute("transform", "translate(" + nodePos.x + " " + nodePos.y + ")");
 
     var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circle.setAttribute("r", 13);
+    circle.setAttribute("r", 18);
     circle.setAttribute("fill", MAP_CATEGORY_COLORS[node.category] || "#32c5ff");
 
     var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.setAttribute("x", 18);
-    text.setAttribute("y", 4);
+    text.setAttribute("x", 0);
+    text.setAttribute("y", 36);
+    text.setAttribute("text-anchor", "middle");
     text.textContent = node.year + " " + node.name;
 
     group.appendChild(circle);
@@ -378,8 +411,8 @@ function setupPanZoom() {
   svg.addEventListener("wheel", function (event) {
     event.preventDefault();
     var scale = event.deltaY > 0 ? 1.08 : 0.92;
-    MAP_STATE.viewBox.w = Math.max(700, Math.min(2200, MAP_STATE.viewBox.w * scale));
-    MAP_STATE.viewBox.h = Math.max(320, Math.min(980, MAP_STATE.viewBox.h * scale));
+    MAP_STATE.viewBox.w = Math.max(760, Math.min(1600, MAP_STATE.viewBox.w * scale));
+    MAP_STATE.viewBox.h = Math.max(900, Math.min(2300, MAP_STATE.viewBox.h * scale));
     renderMap();
   });
 

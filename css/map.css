@@ -29,7 +29,7 @@
 }
 
 .map-canvas {
-  min-height: 64vh;
+  min-height: 78vh;
   overflow: hidden;
   position: relative;
 }
@@ -37,7 +37,7 @@
 .map-svg {
   width: 100%;
   height: 100%;
-  min-height: 64vh;
+  min-height: 78vh;
   display: block;
   background: linear-gradient(180deg, rgba(2, 14, 31, 0.75), rgba(7, 20, 38, 0.92));
 }
@@ -56,6 +56,19 @@
 .map-lane-label {
   fill: rgba(201, 224, 248, 0.75);
   font-family: "Noto Sans TC", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.map-year-line {
+  stroke: rgba(127, 179, 234, 0.18);
+  stroke-width: 1;
+  stroke-dasharray: 4 8;
+}
+
+.map-year-label {
+  fill: rgba(157, 179, 207, 0.78);
+  font-family: "Space Grotesk", "Noto Sans TC", sans-serif;
   font-size: 12px;
 }
 
@@ -78,7 +91,7 @@
 .map-node text {
   fill: #dce9f8;
   font-family: "Noto Sans TC", sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   pointer-events: none;
 }
 
@@ -88,7 +101,7 @@
 }
 
 .map-panel {
-  min-height: 64vh;
+  min-height: 78vh;
   padding: 16px;
   overflow: auto;
 }
@@ -220,10 +233,22 @@
   .map-layout {
     grid-template-columns: 1fr;
   }
+
+  .map-canvas,
+  .map-svg,
+  .map-panel {
+    min-height: 70vh;
+  }
 }
 
 @media (max-width: 760px) {
   .topic-grid {
     grid-template-columns: 1fr;
+  }
+
+  .map-canvas,
+  .map-svg,
+  .map-panel {
+    min-height: 62vh;
   }
 }
