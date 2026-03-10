@@ -1,6 +1,6 @@
 /**
  * AI Explorer — 節點資料庫
- * 包含 25 個 AI 歷史關鍵節點的完整資料
+ * 包含 33 個 AI 歷史關鍵節點的完整資料（含 Google / DeepMind 2024–2026 突破）
  */
 
 const AI_NODES = [
@@ -501,7 +501,7 @@ const AI_NODES = [
       answer: 1,
       explanation: "訓練時加入雜訊，讓模型學會逆向還原；推理時從純雜訊開始，一步步生成圖像。"
     },
-    connections: ["chatgpt", "multimodal"],
+    connections: ["chatgpt", "multimodal", "veo-imagen"],
     position: { x: 1180, y: 350 }
   },
   {
@@ -551,7 +551,7 @@ const AI_NODES = [
       answer: 0,
       explanation: "多模態模型的核心優勢是跨模態理解，也就是把不同型態的資訊放在一起分析，而不是只看文字。"
     },
-    connections: ["reasoning-models"],
+    connections: ["reasoning-models", "gemini-15-pro"],
     position: { x: 1330, y: 200 }
   },
   {
@@ -576,7 +576,7 @@ const AI_NODES = [
       answer: 0,
       explanation: "這一類模型的重要性在於更擅長處理需要拆解、規劃與推理的任務，而不只是產生流暢文字。"
     },
-    connections: ["multimodal", "ai-agents"],
+    connections: ["multimodal", "ai-agents", "alphageometry", "gemini-15-pro"],
     position: { x: 1360, y: 230 }
   },
   {
@@ -626,8 +626,208 @@ const AI_NODES = [
       answer: 0,
       explanation: "AI Native Workflow 的核心不是單次炫技，而是讓 AI 成為流程中的穩定合作夥伴，提升實際工作效率。"
     },
-    connections: ["ai-agents"],
+    connections: ["ai-agents", "gemini-31-continuous"],
     position: { x: 1410, y: 270 }
+  },
+  {
+    id: "gemini-15-pro",
+    year: 2024,
+    name: "Gemini 1.5 Pro",
+    nameEn: "Gemini 1.5 Pro",
+    category: "breakthrough",
+    tagline: "百萬 Token 超長上下文視窗",
+    description: "Google 推出 Gemini 1.5 Pro，採用混合專家模型（MoE）架構，將上下文長度提升至 100 萬甚至 200 萬個 Token。這讓 AI 能一次性處理整本長篇小說、數小時影片或數十萬行程式碼，是大型語言模型上下文處理能力的里程碑。同年展示的 Project Astra 也突破了即時多模態（視覺＋語音）互動的延遲瓶頸。",
+    youtubeId: "cNfINi5CNbY",
+    figure: "Google DeepMind 團隊（2024），Gemini 1.5 系列",
+    applications: ["長文件理解與問答", "完整程式碼庫分析", "長影片內容摘要", "Project Astra 即時視覺助理"],
+    misconception: "超長上下文不等於完美記憶，模型在極長輸入中仍可能遺漏特定細節或出現注意力稀釋。",
+    quiz: {
+      question: "Gemini 1.5 Pro 最突破性的技術特色是什麼？",
+      options: [
+        "A. 能上網即時搜尋所有資訊",
+        "B. 上下文視窗擴展到百萬 Token，能處理超長內容",
+        "C. 完全不需要 GPU 就能運行"
+      ],
+      answer: 1,
+      explanation: "Gemini 1.5 Pro 的 MoE 架構讓上下文從數千 Token 飛躍到百萬等級，徹底改變長內容處理方式。"
+    },
+    connections: ["multimodal", "reasoning-models", "alphafold3"],
+    position: { x: 1440, y: 200 }
+  },
+  {
+    id: "alphafold3",
+    year: 2024,
+    name: "AlphaFold 3",
+    nameEn: "AlphaFold 3",
+    category: "breakthrough",
+    tagline: "預測所有生命分子的結構",
+    description: "DeepMind 的 AlphaFold 3 不再只預測蛋白質，而是能準確預測幾乎所有生命分子（DNA、RNA、配體、離子等）的 3D 結構及交互作用，大幅加速新藥研發和生物醫學研究。這項突破被《Nature》稱為「分子生物學的革命」。",
+    youtubeId: "P-TuAkJLWKA",
+    figure: "Google DeepMind 團隊，Demis Hassabis 與 John Jumper（2024）",
+    applications: ["新藥研發加速", "蛋白質與藥物交互預測", "疾病機制研究", "酵素工程設計"],
+    misconception: "AlphaFold 3 預測的是結構「形狀」，不代表直接等於新藥。從結構預測到可用藥物仍需大量實驗驗證。",
+    quiz: {
+      question: "AlphaFold 3 相比前代最大的進步是什麼？",
+      options: [
+        "A. 速度快了一千倍",
+        "B. 能預測幾乎所有生命分子（不只蛋白質）的結構與交互",
+        "C. 不再需要任何訓練資料"
+      ],
+      answer: 1,
+      explanation: "AlphaFold 3 將預測範圍從蛋白質擴展到 DNA、RNA、配體等所有重要生命分子的結構。"
+    },
+    connections: ["gemini-15-pro", "alphageometry"],
+    position: { x: 1480, y: 300 }
+  },
+  {
+    id: "alphageometry",
+    year: 2024,
+    name: "AlphaGeometry",
+    nameEn: "AlphaGeometry",
+    category: "model",
+    tagline: "AI 解題達到奧林匹亞金牌水準",
+    description: "DeepMind 推出的 AlphaGeometry 結合了神經語言模型與符號推理引擎，能在國際數學奧林匹亞（IMO）等級的幾何題目上達到人類金牌選手水準，是 AI 在數理推理領域的重大里程碑。",
+    youtubeId: "BID_vgMn1SM",
+    figure: "Google DeepMind（2024），結合神經網路與符號推理的混合式 AI",
+    applications: ["數學定理自動證明", "幾何問題求解", "教育用自動解題", "科學假說推理"],
+    misconception: "AlphaGeometry 擅長特定的幾何證明，但不代表 AI 已具備通用數學思考能力。",
+    quiz: {
+      question: "AlphaGeometry 的獨特之處在於？",
+      options: [
+        "A. 純粹用蠻力計算窮舉所有解法",
+        "B. 結合神經語言模型和符號推理引擎來解幾何題",
+        "C. 只能解簡單的四則運算"
+      ],
+      answer: 1,
+      explanation: "AlphaGeometry 的創新在於混合了直覺式的神經網路和嚴謹的符號推理，兩者互補。"
+    },
+    connections: ["alphafold3", "reasoning-models", "gemini3-deep-think"],
+    position: { x: 1500, y: 170 }
+  },
+  {
+    id: "veo-imagen",
+    year: 2024,
+    name: "Veo & Imagen 3",
+    nameEn: "Veo & Imagen 3",
+    category: "model",
+    tagline: "文字生成 4K 影片與超擬真圖像",
+    description: "Google DeepMind 在 2024 年推出影片生成模型 Veo（支援 4K 高畫質，物理邏輯連貫）以及圖像生成模型 Imagen 3（極高品質文生圖）。這讓 AI 的視覺創作能力從靜態圖片大幅躍進到動態影片領域。",
+    youtubeId: "",
+    figure: "Google DeepMind（2024），Veo 與 Imagen 3 生成式影像技術",
+    applications: ["短影片自動生成", "廣告與行銷素材製作", "影視概念預覽", "AI 藝術創作"],
+    misconception: "AI 生成的影片雖然畫面精良，但在長時間一致性、精確物理模擬和人體動作上仍有明顯瑕疵。",
+    quiz: {
+      question: "Google 的 Veo 模型在 2024 年的突破是什麼？",
+      options: [
+        "A. 能從文字描述直接生成 4K 影片",
+        "B. 能讓使用者免費使用 GPU",
+        "C. 主要用來壓縮影片檔案大小"
+      ],
+      answer: 0,
+      explanation: "Veo 讓文字轉影片的品質達到 4K 等級且物理邏輯連貫，是影片生成領域的重大進展。"
+    },
+    connections: ["diffusion", "veo3-flow"],
+    position: { x: 1460, y: 380 }
+  },
+  {
+    id: "gemini3-deep-think",
+    year: 2025,
+    name: "Gemini 3 Deep Think",
+    nameEn: "Gemini 3 Deep Think",
+    category: "breakthrough",
+    tagline: "系統二深層推理架構",
+    description: "2025 年 Google 推出 Gemini 3 系列，其中 Deep Think 版本具備深層「系統二（System 2）」思考能力，在國際數學奧林匹亞級別的推理問題上達到穩定奪金水準。這代表大型語言模型從快速直覺回答邁向深度邏輯推理的關鍵進化。",
+    youtubeId: "",
+    figure: "Google DeepMind 團隊（2025），Gemini 3 Pro / Flash / Deep Think 系列",
+    applications: ["國際數學奧林匹亞問題求解", "複雜程式設計與除錯", "科學研究假說論證", "長程規劃與策略分析"],
+    misconception: "Deep Think 的「思考」仍然是模型內部的推理過程模擬，並非真正的人類意識或自覺。",
+    quiz: {
+      question: "Gemini 3 Deep Think 的「深層思考」指的是？",
+      options: [
+        "A. 能「系統二」式地逐步拆解推理複雜問題",
+        "B. 需要更多電力所以叫做「深」",
+        "C. 只是速度更快的舊模型"
+      ],
+      answer: 0,
+      explanation: "Deep Think 模擬人類慢思考（System 2），在需要多步推理的問題上表現遠超直覺型回答。"
+    },
+    connections: ["reasoning-models", "ai-agents", "alphageometry", "gemini-31-continuous"],
+    position: { x: 1530, y: 230 }
+  },
+  {
+    id: "genie3-world-model",
+    year: 2025,
+    name: "Genie 3 世界模型",
+    nameEn: "Genie 3 World Model",
+    category: "model",
+    tagline: "AI 生成可互動的虛擬世界",
+    description: "DeepMind 的 Genie 模型進化至第三代，能夠從文字或圖片描述生成具備高解析度、且在數分鐘內維持極佳物理一致性的互動式虛擬環境。Genie 3 被視為「世界模型（World Model）」研究方向的重大突破，讓 AI 離理解物理世界運作更近一步。",
+    youtubeId: "",
+    figure: "Google DeepMind（2025），Genie 3 通用世界模型",
+    applications: ["遊戲世界自動生成", "模擬訓練環境", "機器人行為預演", "虛擬實境內容創建"],
+    misconception: "Genie 3 的虛擬世界在細節和多分鐘長度後仍會出現物理錯誤，離完美的世界模擬還有距離。",
+    quiz: {
+      question: "Genie 3 和一般 AI 圖像生成最大的不同是？",
+      options: [
+        "A. 它生成的不只是圖片，而是可互動的 3D 虛擬環境",
+        "B. 它只能生成文字描述",
+        "C. 它需要手動畫出每一格畫面"
+      ],
+      answer: 0,
+      explanation: "Genie 3 的革命性在於生成的是「可互動的世界」，使用者可以在其中移動和操作，不只是靜態圖像。"
+    },
+    connections: ["veo-imagen", "veo3-flow"],
+    position: { x: 1550, y: 350 }
+  },
+  {
+    id: "veo3-flow",
+    year: 2025,
+    name: "Veo 3 & Flow",
+    nameEn: "Veo 3 & Flow",
+    category: "model",
+    tagline: "影片與原生音效同步生成",
+    description: "Veo 3 達成了「影片與原生音效同步生成」的突破，AI 不再只輸出無聲畫面，而能自動同步配上合理的環境音效和音樂。同時推出的 Flow 創作平台讓非專業人士也能用 AI 快速製作高品質影片內容，重塑影音產業工作流程。",
+    youtubeId: "",
+    figure: "Google DeepMind（2025），Veo 3 影音同步生成技術與 Flow 創作平台",
+    applications: ["影音內容一站式創作", "廣告與社群媒體素材", "教育影片自動製作", "獨立製片概念預覽"],
+    misconception: "Veo 3 的音效雖然自動生成，但在複雜場景下仍需人工微調，目前還不能完全取代專業音效師。",
+    quiz: {
+      question: "Veo 3 相比前代 Veo 最大的進步是？",
+      options: [
+        "A. 能同步生成影片畫面與對應的原生音效",
+        "B. 運算速度快了十倍",
+        "C. 只支援黑白影片"
+      ],
+      answer: 0,
+      explanation: "Veo 3 的創新在於打破了影像與音效分離的限制，首次實現 AI 原生影音同步生成。"
+    },
+    connections: ["veo-imagen", "genie3-world-model"],
+    position: { x: 1580, y: 280 }
+  },
+  {
+    id: "gemini-31-continuous",
+    year: 2026,
+    name: "Gemini 3.1 持續學習",
+    nameEn: "Gemini 3.1 & Continuous Learning",
+    category: "breakthrough",
+    tagline: "AI 不中斷地自我進化",
+    description: "2026 年初 Google 發布 Gemini 3.1 Pro 與 Flash Lite，同時 DeepMind 在連續學習技術上取得重大突破：模型能在運作時不中斷地自我吸收新知識並優化，突破過往 LLM 只停留在「訓練時間點」的限制。結合多代理協作框架，多個 AI Agent 能彼此溝通、規劃長程目標並自動執行跨部門任務，標誌著企業級 AI Agent 時代正式到來。",
+    youtubeId: "",
+    figure: "Google DeepMind（2026），Gemini 3.1 系列與連續學習技術（Nested Method, NeurIPS 2025）",
+    applications: ["AI 即時知識更新", "企業級多 Agent 協作自動化", "設備端與雲端 AI 無縫協作", "自動化科學研究流程"],
+    misconception: "連續學習不代表 AI 已具備人類意識或完全自主判斷力，更新過程仍需嚴格的品質與安全監控。",
+    quiz: {
+      question: "Gemini 3.1 的「連續學習」技術最關鍵的突破是？",
+      options: [
+        "A. 模型能在運行時不中斷地自我吸收新知識並持續優化",
+        "B. 模型的參數量增加到一兆",
+        "C. 只能在離線環境中學習"
+      ],
+      answer: 0,
+      explanation: "連續學習打破了 LLM 只能在固定訓練時間點凍結知識的限制，讓 AI 能持續進化。"
+    },
+    connections: ["ai-native-workflows", "ai-agents", "gemini3-deep-think"],
+    position: { x: 1560, y: 200 }
   }
 ];
 
@@ -643,17 +843,17 @@ function getNodesByEra(startYear, endYear) {
 
 // 輔助函式：取得節點的所有連線（雙向）
 function getConnections(nodeId) {
-  return AI_NODES.filter(n => n.connections.includes(nodeId) || 
+  return AI_NODES.filter(n => n.connections.includes(nodeId) ||
     AI_NODES.find(m => m.id === nodeId)?.connections.includes(n.id));
 }
 
 // 類別設定（顏色和標籤）
 const CATEGORIES = {
-  theory:      { label: "理論基礎",  color: "#38BDF8" },
-  model:       { label: "模型架構",  color: "#34D399" },
-  training:    { label: "訓練方法",  color: "#FB923C" },
-  breakthrough:{ label: "應用突破",  color: "#A78BFA" },
-  winter:      { label: "AI 寒冬",   color: "#64748B" }
+  theory: { label: "理論基礎", color: "#38BDF8" },
+  model: { label: "模型架構", color: "#34D399" },
+  training: { label: "訓練方法", color: "#FB923C" },
+  breakthrough: { label: "應用突破", color: "#A78BFA" },
+  winter: { label: "AI 寒冬", color: "#64748B" }
 };
 
 // 時代分期

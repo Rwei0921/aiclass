@@ -1,7 +1,7 @@
 var MAP_STATE = {
   selectedNodeId: null,
   currentEra: "all",
-  viewBox: { x: 0, y: 0, w: 1140, h: 1980 },
+  viewBox: { x: 0, y: 0, w: 1820, h: 2200 },
   dragging: false,
   dragStart: null
 };
@@ -24,21 +24,21 @@ var MAP_ERA_GROUPS = [
 ];
 
 var MAP_CATEGORY_COLUMNS = {
-  theory: { x: 160, label: "理論基礎" },
-  model: { x: 390, label: "模型架構" },
-  training: { x: 620, label: "訓練方法" },
-  breakthrough: { x: 850, label: "應用突破" },
-  winter: { x: 1060, label: "AI 寒冬" }
+  theory: { x: 180, label: "理論基礎" },
+  model: { x: 450, label: "模型架構" },
+  training: { x: 720, label: "訓練方法" },
+  breakthrough: { x: 990, label: "應用突破" },
+  winter: { x: 1220, label: "AI 寒冬" }
 };
 
 var MAP_YEAR_LAYOUT = {
   segments: [
-    { start: 1950, end: 1989, top: 140, bottom: 760 },
-    { start: 1990, end: 2009, top: 840, bottom: 1180 },
-    { start: 2010, end: 2016, top: 1260, bottom: 1510 },
-    { start: 2017, end: 2019, top: 1560, bottom: 1680 },
-    { start: 2020, end: 2023, top: 1760, bottom: 1940 },
-    { start: 2024, end: 2026, top: 2010, bottom: 2240 }
+    { start: 1950, end: 1989, top: 180, bottom: 980 },
+    { start: 1990, end: 2009, top: 1080, bottom: 1520 },
+    { start: 2010, end: 2016, top: 1620, bottom: 1940 },
+    { start: 2017, end: 2019, top: 2040, bottom: 2200 },
+    { start: 2020, end: 2023, top: 2300, bottom: 2550 },
+    { start: 2024, end: 2026, top: 2660, bottom: 2960 }
   ],
   markers: [1950, 1960, 1970, 1980, 1990, 2000, 2010, 2012, 2014, 2016, 2018, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
 };
@@ -162,12 +162,82 @@ function getNodeRenderPosition(node) {
   }
 
   var offsetSeed = (node.year + node.id.length) % 3;
-  var xOffset = (offsetSeed - 1) * 24;
+  var xOffset = (offsetSeed - 1) * 34;
 
   return {
     x: column.x + xOffset,
     y: getYearY(node.year)
   };
+}
+
+function buildResolvedNodePositions(nodes) {
+  var positions = {};
+  var groups = {};
+  var minGap = 92;
+  var xPattern = [0, -44, 44, -88, 88, -128, 128];
+
+  nodes.forEach(function (node) {
+    var basePos = getNodeRenderPosition(node);
+    positions[node.id] = { x: basePos.x, y: basePos.y };
+
+    if (!groups[node.category]) {
+      groups[node.category] = [];
+    }
+    groups[node.category].push(node);
+  });
+
+  Object.keys(groups).forEach(function (category) {
+    var group = groups[category]
+      .slice()
+      .sort(function (a, b) {
+        var diff = positions[a.id].y - positions[b.id].y;
+        if (diff !== 0) {
+          return diff;
+        }
+        if (a.year !== b.year) {
+          return a.year - b.year;
+        }
+        return a.id.localeCompare(b.id);
+      });
+
+    var clusters = [];
+    var active = [];
+
+    group.forEach(function (node) {
+      var y = positions[node.id].y;
+      if (!active.length) {
+        active.push(node);
+        return;
+      }
+
+      var prev = active[active.length - 1];
+      var prevY = positions[prev.id].y;
+      if (y - prevY < minGap) {
+        active.push(node);
+      } else {
+        clusters.push(active);
+        active = [node];
+      }
+    });
+
+    if (active.length) {
+      clusters.push(active);
+    }
+
+    clusters.forEach(function (cluster) {
+      if (cluster.length === 1) {
+        return;
+      }
+
+      var centerX = MAP_CATEGORY_COLUMNS[category] ? MAP_CATEGORY_COLUMNS[category].x : positions[cluster[0].id].x;
+      cluster.forEach(function (node, index) {
+        var slot = index < xPattern.length ? xPattern[index] : ((index % 2 === 0 ? 1 : -1) * (44 * Math.ceil(index / 2)));
+        positions[node.id].x = centerX + slot;
+      });
+    });
+  });
+
+  return positions;
 }
 
 function getYearY(year) {
@@ -196,7 +266,7 @@ function renderCategoryLanes(svg) {
     laneLine.setAttribute("x1", column.x);
     laneLine.setAttribute("y1", 80);
     laneLine.setAttribute("x2", column.x);
-    laneLine.setAttribute("y2", 2290);
+    laneLine.setAttribute("y2", 3010);
     laneLine.setAttribute("class", "map-lane-line");
     laneLayer.appendChild(laneLine);
 
@@ -215,7 +285,7 @@ function renderCategoryLanes(svg) {
     var yearLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
     yearLine.setAttribute("x1", 80);
     yearLine.setAttribute("y1", y);
-    yearLine.setAttribute("x2", 1120);
+    yearLine.setAttribute("x2", 1700);
     yearLine.setAttribute("y2", y);
     yearLine.setAttribute("class", "map-year-line");
     laneLayer.appendChild(yearLine);
@@ -270,19 +340,28 @@ function renderMap() {
   svg.setAttribute("viewBox", [MAP_STATE.viewBox.x, MAP_STATE.viewBox.y, MAP_STATE.viewBox.w, MAP_STATE.viewBox.h].join(" "));
 
   var visibleNodes = getVisibleNodes();
+  var nodePositions = buildResolvedNodePositions(visibleNodes);
   var visibleIds = visibleNodes.map(function (node) {
     return node.id;
   });
 
   var gridLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
   gridLayer.setAttribute("class", "map-grid");
-  for (var x = 80; x <= 1120; x += 80) {
+  for (var x = 80; x <= 1300; x += 90) {
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("x1", x);
     line.setAttribute("y1", 30);
     line.setAttribute("x2", x);
-    line.setAttribute("y2", 2310);
+    line.setAttribute("y2", 3030);
     gridLayer.appendChild(line);
+  }
+  for (var x2 = 1380; x2 <= 1760; x2 += 95) {
+    var line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line2.setAttribute("x1", x2);
+    line2.setAttribute("y1", 30);
+    line2.setAttribute("x2", x2);
+    line2.setAttribute("y2", 3030);
+    gridLayer.appendChild(line2);
   }
   svg.appendChild(gridLayer);
   renderCategoryLanes(svg);
@@ -300,8 +379,8 @@ function renderMap() {
         return;
       }
 
-      var fromPos = getNodeRenderPosition(node);
-      var toPos = getNodeRenderPosition(target);
+      var fromPos = nodePositions[node.id] || getNodeRenderPosition(node);
+      var toPos = nodePositions[target.id] || getNodeRenderPosition(target);
       var dy = toPos.y - fromPos.y;
       var bend = Math.max(45, Math.min(150, Math.abs(dy) * 0.28));
 
@@ -310,9 +389,9 @@ function renderMap() {
       path.setAttribute(
         "d",
         "M " + fromPos.x + " " + fromPos.y +
-          " C " + fromPos.x + " " + (fromPos.y + bend) +
-          " " + toPos.x + " " + (toPos.y - bend) +
-          " " + toPos.x + " " + toPos.y
+        " C " + fromPos.x + " " + (fromPos.y + bend) +
+        " " + toPos.x + " " + (toPos.y - bend) +
+        " " + toPos.x + " " + toPos.y
       );
       connectionLayer.appendChild(path);
     });
@@ -321,7 +400,7 @@ function renderMap() {
 
   var nodeLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
   visibleNodes.forEach(function (node) {
-    var nodePos = getNodeRenderPosition(node);
+    var nodePos = nodePositions[node.id] || getNodeRenderPosition(node);
     var group = document.createElementNS("http://www.w3.org/2000/svg", "g");
     group.setAttribute("class", "map-node" + (MAP_STATE.selectedNodeId === node.id ? " active" : ""));
     group.setAttribute("transform", "translate(" + nodePos.x + " " + nodePos.y + ")");
@@ -427,8 +506,8 @@ function setupPanZoom() {
   svg.addEventListener("wheel", function (event) {
     event.preventDefault();
     var scale = event.deltaY > 0 ? 1.08 : 0.92;
-    MAP_STATE.viewBox.w = Math.max(820, Math.min(1700, MAP_STATE.viewBox.w * scale));
-    MAP_STATE.viewBox.h = Math.max(1400, Math.min(3200, MAP_STATE.viewBox.h * scale));
+    MAP_STATE.viewBox.w = Math.max(980, Math.min(2600, MAP_STATE.viewBox.w * scale));
+    MAP_STATE.viewBox.h = Math.max(1700, Math.min(3900, MAP_STATE.viewBox.h * scale));
     renderMap();
   });
 
