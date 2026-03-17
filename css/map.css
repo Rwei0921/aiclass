@@ -88,11 +88,19 @@
   stroke-width: 2;
 }
 
-.map-node text {
+.map-node text,
+.map-node-label {
   fill: #dce9f8;
   font-family: "Noto Sans TC", sans-serif;
   font-size: 13px;
   pointer-events: none;
+}
+
+.map-node-label {
+  paint-order: stroke;
+  stroke: rgba(5, 16, 30, 0.9);
+  stroke-width: 3px;
+  stroke-linejoin: round;
 }
 
 .map-node:hover circle,

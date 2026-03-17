@@ -176,6 +176,10 @@ function buildResolvedNodePositions(nodes) {
   var minGap = 92;
   var xPattern = [0, -44, 44, -88, 88, -128, 128];
 
+  function getCenteredOffset(index, total, step) {
+    return (index - (total - 1) / 2) * step;
+  }
+
   nodes.forEach(function (node) {
     var basePos = getNodeRenderPosition(node);
     positions[node.id] = { x: basePos.x, y: basePos.y };
@@ -230,7 +234,17 @@ function buildResolvedNodePositions(nodes) {
       }
 
       var centerX = MAP_CATEGORY_COLUMNS[category] ? MAP_CATEGORY_COLUMNS[category].x : positions[cluster[0].id].x;
+      var sameYearCluster = cluster.every(function (node) {
+        return node.year === cluster[0].year;
+      });
+
       cluster.forEach(function (node, index) {
+        if (sameYearCluster) {
+          positions[node.id].x = centerX + getCenteredOffset(index, cluster.length, 92);
+          positions[node.id].y = positions[node.id].y + getCenteredOffset(index, cluster.length, 52);
+          return;
+        }
+
         var slot = index < xPattern.length ? xPattern[index] : ((index % 2 === 0 ? 1 : -1) * (44 * Math.ceil(index / 2)));
         positions[node.id].x = centerX + slot;
       });
@@ -238,6 +252,116 @@ function buildResolvedNodePositions(nodes) {
   });
 
   return positions;
+}
+
+function getLabelCandidates(nodePos, labelWidth) {
+  var offset = 28;
+  var halfWidth = labelWidth / 2;
+
+  return [
+    {
+      x: nodePos.x + offset,
+      y: nodePos.y + 4,
+      anchor: "start",
+      bbox: {
+        left: nodePos.x + offset,
+        right: nodePos.x + offset + labelWidth,
+        top: nodePos.y - 12,
+        bottom: nodePos.y + 6
+      }
+    },
+    {
+      x: nodePos.x - offset,
+      y: nodePos.y + 4,
+      anchor: "end",
+      bbox: {
+        left: nodePos.x - offset - labelWidth,
+        right: nodePos.x - offset,
+        top: nodePos.y - 12,
+        bottom: nodePos.y + 6
+      }
+    },
+    {
+      x: nodePos.x,
+      y: nodePos.y - 26,
+      anchor: "middle",
+      bbox: {
+        left: nodePos.x - halfWidth,
+        right: nodePos.x + halfWidth,
+        top: nodePos.y - 42,
+        bottom: nodePos.y - 24
+      }
+    },
+    {
+      x: nodePos.x,
+      y: nodePos.y + 38,
+      anchor: "middle",
+      bbox: {
+        left: nodePos.x - halfWidth,
+        right: nodePos.x + halfWidth,
+        top: nodePos.y + 22,
+        bottom: nodePos.y + 40
+      }
+    }
+  ];
+}
+
+function isOverlappingLabel(a, b) {
+  return !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
+}
+
+function getOverlapArea(a, b) {
+  var overlapX = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+  var overlapY = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+  return overlapX * overlapY;
+}
+
+function buildResolvedLabelLayouts(nodes, nodePositions) {
+  var layouts = {};
+  var usedBoxes = [];
+
+  nodes
+    .slice()
+    .sort(function (a, b) {
+      var yDiff = (nodePositions[a.id] ? nodePositions[a.id].y : 0) - (nodePositions[b.id] ? nodePositions[b.id].y : 0);
+      if (yDiff !== 0) {
+        return yDiff;
+      }
+      return a.id.localeCompare(b.id);
+    })
+    .forEach(function (node) {
+      var nodePos = nodePositions[node.id] || getNodeRenderPosition(node);
+      var labelText = node.year + " " + node.name;
+      var labelWidth = Math.max(80, labelText.length * 7.2);
+      var candidates = getLabelCandidates(nodePos, labelWidth);
+
+      var bestCandidate = null;
+      var minOverlap = Infinity;
+
+      candidates.forEach(function (candidate) {
+        var overlap = 0;
+        usedBoxes.forEach(function (box) {
+          if (isOverlappingLabel(candidate.bbox, box)) {
+            overlap += getOverlapArea(candidate.bbox, box);
+          }
+        });
+
+        if (overlap < minOverlap) {
+          minOverlap = overlap;
+          bestCandidate = candidate;
+        }
+      });
+
+      var resolved = bestCandidate || candidates[0];
+      layouts[node.id] = {
+        x: resolved.x,
+        y: resolved.y,
+        anchor: resolved.anchor
+      };
+      usedBoxes.push(resolved.bbox);
+    });
+
+  return layouts;
 }
 
 function getYearY(year) {
@@ -341,6 +465,7 @@ function renderMap() {
 
   var visibleNodes = getVisibleNodes();
   var nodePositions = buildResolvedNodePositions(visibleNodes);
+  var labelLayouts = buildResolvedLabelLayouts(visibleNodes, nodePositions);
   var visibleIds = visibleNodes.map(function (node) {
     return node.id;
   });
@@ -399,6 +524,8 @@ function renderMap() {
   svg.appendChild(connectionLayer);
 
   var nodeLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  var labelLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  labelLayer.setAttribute("class", "map-label-layer");
   visibleNodes.forEach(function (node) {
     var nodePos = nodePositions[node.id] || getNodeRenderPosition(node);
     var group = document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -409,22 +536,25 @@ function renderMap() {
     circle.setAttribute("r", 18);
     circle.setAttribute("fill", MAP_CATEGORY_COLORS[node.category] || "#32c5ff");
 
+    var labelLayout = labelLayouts[node.id] || { x: nodePos.x + 28, y: nodePos.y + 4, anchor: "start" };
     var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.setAttribute("x", 0);
-    text.setAttribute("y", 36);
-    text.setAttribute("text-anchor", "middle");
+    text.setAttribute("class", "map-node-label");
+    text.setAttribute("x", labelLayout.x);
+    text.setAttribute("y", labelLayout.y);
+    text.setAttribute("text-anchor", labelLayout.anchor);
     text.textContent = node.year + " " + node.name;
 
     group.appendChild(circle);
-    group.appendChild(text);
     group.addEventListener("click", function () {
       MAP_STATE.selectedNodeId = node.id;
       renderMap();
       renderPanel();
     });
     nodeLayer.appendChild(group);
+    labelLayer.appendChild(text);
   });
   svg.appendChild(nodeLayer);
+  svg.appendChild(labelLayer);
 }
 
 function renderPanel() {
