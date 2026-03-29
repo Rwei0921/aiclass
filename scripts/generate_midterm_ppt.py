@@ -1,3 +1,7 @@
+import json
+import re
+from collections import Counter
+from datetime import datetime
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -344,128 +348,229 @@ def add_two_column_slide(prs, title, left_title, left_points, right_title, right
     return slide
 
 
+def collect_project_stats():
+    root = Path("D:/AIClass")
+    data_path = root / "js/data.js"
+    notebook_path = root / "data/notebooklm-export.json"
+
+    data_text = data_path.read_text(encoding="utf-8")
+    node_ids = re.findall(r'id:\s*"([^"]+)"', data_text)
+    years = [int(y) for y in re.findall(r"year:\s*(\d{4})", data_text)]
+    categories = re.findall(r'category:\s*"([^"]+)"', data_text)
+    youtube_ids = re.findall(r'youtubeId:\s*"([^"]*)"', data_text)
+
+    node_count = len(node_ids)
+    year_min = min(years) if years else 0
+    year_max = max(years) if years else 0
+    category_counts = Counter(categories)
+    with_video = sum(1 for item in youtube_ids if item.strip())
+
+    era_ranges = [
+        ("1950s", 1950, 1959),
+        ("1960-1989", 1960, 1989),
+        ("1990-2009", 1990, 2009),
+        ("2010-2019", 2010, 2019),
+        ("2020-2026", 2020, 2026),
+    ]
+    era_counts = {}
+    for label, start, end in era_ranges:
+        era_counts[label] = sum(1 for year in years if start <= year <= end)
+
+    notebook_nodes = []
+    if notebook_path.exists():
+        payload = json.loads(notebook_path.read_text(encoding="utf-8"))
+        notebook_nodes = payload.get("nodes", [])
+
+    notebook_ids = {item.get("nodeId") for item in notebook_nodes if item.get("nodeId")}
+    notebook_matched = len(set(node_ids) & notebook_ids)
+
+    source_files = [
+        "index.html",
+        "map.html",
+        "topics.html",
+        "about.html",
+        "css/style.css",
+        "css/map.css",
+        "js/main.js",
+        "js/map.js",
+        "js/data.js",
+    ]
+    total_lines = 0
+    for rel_path in source_files:
+        file_path = root / rel_path
+        if file_path.exists():
+            total_lines += len(file_path.read_text(encoding="utf-8").splitlines())
+
+    docs_for_counts = ["ReadMe.md", "index.html", "topics.html", "about.html", "task.md"]
+    count_mentions = set()
+    for rel_path in docs_for_counts:
+        file_path = root / rel_path
+        if not file_path.exists():
+            continue
+        text = file_path.read_text(encoding="utf-8")
+        for match in re.findall(r"(\d+)\s*個?\s*節點", text):
+            count_mentions.add(int(match))
+
+    return {
+        "node_count": node_count,
+        "year_min": year_min,
+        "year_max": year_max,
+        "category_counts": category_counts,
+        "with_video": with_video,
+        "era_counts": era_counts,
+        "notebook_count": len(notebook_nodes),
+        "notebook_matched": notebook_matched,
+        "total_lines": total_lines,
+        "count_mentions": sorted(count_mentions),
+    }
+
+
 def main():
     prs = Presentation()
+    stats = collect_project_stats()
     slides = []
     visuals = ensure_visual_assets()
+    report_date = datetime.now().strftime("%Y/%m/%d")
+    notebook_coverage = (stats["notebook_matched"] / stats["node_count"]) if stats["node_count"] else 0
+    video_coverage = (stats["with_video"] / stats["node_count"]) if stats["node_count"] else 0
+    category_text = "、".join(
+        [
+            f"應用突破 {stats['category_counts'].get('breakthrough', 0)}",
+            f"模型架構 {stats['category_counts'].get('model', 0)}",
+            f"理論基礎 {stats['category_counts'].get('theory', 0)}",
+            f"訓練方法 {stats['category_counts'].get('training', 0)}",
+            f"AI 寒冬 {stats['category_counts'].get('winter', 0)}",
+        ]
+    )
+    era_text = "、".join(
+        [
+            f"1950s {stats['era_counts'].get('1950s', 0)}",
+            f"1960-1989 {stats['era_counts'].get('1960-1989', 0)}",
+            f"1990-2009 {stats['era_counts'].get('1990-2009', 0)}",
+            f"2010-2019 {stats['era_counts'].get('2010-2019', 0)}",
+            f"2020-2026 {stats['era_counts'].get('2020-2026', 0)}",
+        ]
+    )
+    mention_text = " / ".join(str(x) for x in stats["count_mentions"]) if stats["count_mentions"] else "無"
 
     slides.append(add_title_slide(
         prs,
         "AI Explorer — 互動式 AI 地圖",
-        "期中成果報告\n班級：__________  姓名：__________  日期：2026/03"
+        f"期中成果報告\n班級：__________  姓名：__________  日期：{report_date}"
     ))
 
     slides.append(add_bullets_slide(prs, "目錄", [
-        "1. 問題與解決方案",
-        "2. 網站架構與地圖設計",
-        "3. 節點 Demo 與技術選型",
-        "4. 期中完成項目與期末規劃",
-        "5. 反思與 Q&A",
+        "1. 專案定位與解法",
+        "2. 專案現況量化分析",
+        "3. 核心功能與技術架構",
+        "4. 風險盤點與期末規劃",
+        "5. 結論與 Q&A",
     ]))
 
     slides.append(add_two_column_slide(
         prs,
-        "問題：AI 很難懂？",
-        "痛點",
-        ["概念抽象、術語多", "缺乏歷史脈絡", "一般使用者難以快速入門"],
-        "需要的體驗",
-        ["可視化呈現演進", "點擊式互動學習", "白話解釋 + 真實來源"],
+        "專案定位與價值",
+        "問題背景",
+        ["AI 歷史與術語對新手門檻高", "單看文章難建立時間脈絡", "課堂展示缺乏可互動體驗"],
+        "我們的解法",
+        ["用地圖呈現 1950-2026 技術演進", "每個節點提供白話摘要 + 影片 + 小測驗", "整合 NotebookLM 來源，強化可查證性"],
     ))
 
-    slides.append(add_bullets_slide(prs, "解決方案：AI 地圖", [
-        "核心概念：把 AI 發展做成可點擊科技樹",
-        "學習流程：點節點 -> 看摘要 -> 看影片 -> 查來源 -> 做測驗",
-        "目標：讓非資訊背景也能建立完整脈絡",
+    slides.append(add_bullets_slide(prs, "專案現況量化分析", [
+        "網站頁面：4 頁（Home / Map / Topics / About）",
+        f"核心程式碼：{stats['total_lines']} 行（HTML/CSS/JS）",
+        f"資料節點：{stats['node_count']} 個，範圍 {stats['year_min']}–{stats['year_max']}",
+        f"含影片節點：{stats['with_video']}/{stats['node_count']}（{video_coverage:.1%}）",
+        f"NotebookLM 已同步：{stats['notebook_matched']}/{stats['node_count']}（{notebook_coverage:.1%}）",
     ]))
 
-    slides.append(add_bullets_slide(prs, "目標受眾", [
-        "完全不懂 AI 的一般使用者（同學、家人、非資訊背景）",
-        "需要快速理解 AI 發展脈絡的報告觀眾",
-        "想用互動方式學習而非只看長文的人",
+    slides.append(add_bullets_slide(prs, "資料層結構分析（js/data.js）", [
+        f"類別分佈：{category_text}",
+        f"年代分佈：{era_text}",
+        "每個節點都含 id、年份、類別、敘述、誤解釐清、測驗",
+        "連線欄位（connections）可視化技術影響路徑",
+        "資料可被 map.js 與 topics 頁共用，維持一致資料源",
     ]))
 
-    slides.append(add_bullets_slide(prs, "網站架構（Site Map）", [
-        "Home：專案入口與 CTA",
-        "Map：互動 AI 地圖核心頁（左地圖右面板）",
-        "Topics：22 節點主題索引",
-        "About：專案與資料來源說明",
-    ]))
-
-    slides.append(add_bullets_slide(prs, "AI 地圖設計概念", [
-        "橫軸：時間（1950 -> 2023）",
-        "縱向：技術類別（理論、模型、訓練、突破、寒冬）",
-        "節點連線：表示技術影響關係",
-        "互動：點擊、縮放、拖曳、年代篩選",
+    slides.append(add_bullets_slide(prs, "核心功能驗證（map.js）", [
+        "年代篩選：全部 / 1950s / 1960-80s / 1990-2000s / 2010s / 2020s+",
+        "互動操作：節點點擊、地圖拖曳、滑鼠滾輪縮放",
+        "動態面板：摘要、影片、來源、常見誤解、小測驗即時回饋",
+        "NotebookLM 覆蓋時優先顯示同步內容，否則回退預設資料",
+        "主題索引頁與地圖共用資料，降低維護成本",
     ]))
 
     slides.append(add_image_bullets_slide(prs, "地圖截圖全覽", visuals["overview"], [
         "左側 65%：SVG 互動地圖",
         "右側 35%：節點詳情面板",
         "上方：年代篩選（1950s -> 2020s+）",
-        "面板內容：摘要、影片、來源、測驗",
+        "節點點擊後即時更新摘要、影片、來源、測驗",
     ]))
 
     slides.append(add_image_bullets_slide(prs, "節點 Demo 1 — 圖靈測試", visuals["turing"], [
         "年份：1950，類別：理論基礎",
-        "已接 NotebookLM 摘要與來源連結",
+        "目前唯一完成 NotebookLM 同步的節點",
         "本地 mp4 影片可直接在面板播放",
-        "小測驗可即時回饋答案",
+        "小測驗可即時顯示正確與錯誤回饋",
     ]))
 
     slides.append(add_image_bullets_slide(prs, "節點 Demo 2 — Transformer", visuals["transformer"], [
         "年份：2017，類別：模型架構",
-        "定位：大型語言模型的核心架構",
-        "可展示與 BERT / GPT-3 的技術關聯",
-        "規劃補齊 NotebookLM 摘要與影片",
+        "定位：LLM 基礎架構，可串聯 BERT / GPT-3",
+        "展示節點連線與脈絡化學習路徑",
+        "可用年代篩選快速聚焦 2010s 深度學習階段",
     ]))
 
     slides.append(add_image_bullets_slide(prs, "節點 Demo 3 — ChatGPT", visuals["chatgpt"], [
         "年份：2022，類別：應用突破",
-        "重點：AI 大眾化的重要里程碑",
-        "可結合來源出處做可查證展示",
-        "與 Multimodal 節點串接未來趨勢",
+        "代表生成式 AI 大眾化轉折點",
+        "可與 Multimodal / Agents 串成近代趨勢鏈",
+        "目前來源覆蓋仍待補齊，適合作為期末強化重點",
     ]))
 
     slides.append(add_two_column_slide(
         prs,
-        "技術選型",
-        "前端與部署",
-        ["HTML / CSS / JavaScript", "SVG 地圖互動", "GitHub Pages 靜態部署"],
-        "內容系統",
-        ["NotebookLM 作為內容後台", "匯出 JSON 半自動同步", "節點結構與內容層分離"],
+        "技術架構與模組分工",
+        "前端互動層",
+        ["index/map/topics/about 四頁靜態網站", "map.js 負責地圖渲染、互動與面板更新", "CSS 設計系統 + RWD 斷點支援桌機與手機"],
+        "資料與內容層",
+        ["js/data.js 作為單一節點資料源", "notebooklm-export.json 作為可覆蓋內容來源", "scripts/ 內建 Python 腳本自動生成期中簡報"],
     ))
 
-    slides.append(add_bullets_slide(prs, "期中完成清單", [
-        "完成四頁網站：Home / Map / Topics / About",
-        "完成 22 節點資料與地圖互動邏輯",
-        "完成年代篩選、縮放拖曳、測驗互動",
-        "完成 NotebookLM 內容層整合架構",
+    slides.append(add_bullets_slide(prs, "期中完成度總結", [
+        "功能完成：互動地圖、年代篩選、節點詳情、測驗回饋",
+        "內容完成：33 節點資料結構與分類、連線、影片欄位",
+        "頁面完成：首頁導覽、主題索引、關於頁與地圖核心頁",
+        "整合完成：NotebookLM 資料載入與來源列表顯示機制",
+        "簡報產出：以程式自動產生可重複更新的 PPT",
     ]))
 
-    slides.append(add_bullets_slide(prs, "期末計畫", [
-        "補齊 22 節點 NotebookLM 摘要 / 影片 / 來源",
-        "完成 RWD 細節與手機互動優化",
-        "加入搜尋與學習路徑導覽功能",
-        "進行使用者測試與修正迭代",
+    slides.append(add_bullets_slide(prs, "風險盤點與修正策略", [
+        f"文件中的節點數字不一致：{mention_text}（需統一為 {stats['node_count']}）",
+        "NotebookLM 同步覆蓋率偏低，內容品質尚未齊一",
+        "2025-2026 節點帶有趨勢推估，需標示「預測性內容」",
+        "task.md 內瀏覽器/RWD 驗收仍待完成，需補測試證據",
+        "修正策略：先統一資料口徑，再做內容補齊與測試",
     ]))
 
-    slides.append(add_bullets_slide(prs, "反思與挑戰", [
-        "如何在白話與準確性間取得平衡",
-        "如何維持多來源內容的一致更新",
-        "如何提升地圖互動流暢度與可讀性",
-        "下一步：建立固定同步與檢查流程",
+    slides.append(add_bullets_slide(prs, "期末執行規劃（3 階段）", [
+        "Phase 1（資料校正）：統一全站節點數與說明文案、補齊來源標註",
+        "Phase 2（內容擴充）：將 NotebookLM 同步提升到 33/33",
+        "Phase 3（體驗優化）：手機端互動與可讀性微調 + 使用者測試",
+        "驗收指標：載入效能、節點正確率、測驗可用率、來源完整率",
+        "交付成果：期末網站 Demo + 完整技術報告 + 最終簡報",
     ]))
 
     slides.append(add_bullets_slide(prs, "Q&A", [
-        "感謝聆聽",
-        "歡迎提問與建議",
-        "AI Explorer 將持續迭代為更完整的學習平台",
+        "結論：AI Explorer 已完成可互動的教學地圖雛形",
+        "下一步聚焦內容完整度與資料一致性",
+        "感謝聆聽，歡迎提問與建議",
     ]))
 
     for idx, slide in enumerate(prs.slides, start=1):
         add_page_number(slide, str(idx))
 
-    output = Path("D:/AIClass/ppt/midterm_report.pptx")
+    output = Path("D:/AIClass/ppt/AI_Explorer_Midterm_Report.pptx")
     output.parent.mkdir(parents=True, exist_ok=True)
     prs.save(output)
     print(f"Generated: {output}")

@@ -21,7 +21,7 @@ def add_slide(prs, layout, title, content):
                 p.level = 0
     return slide
 
-def create_presentation():
+def create_midterm_presentation():
     prs = Presentation()
     
     # Slide 1: Title
@@ -30,81 +30,63 @@ def create_presentation():
     title = slide.shapes.title
     subtitle = slide.placeholders[1]
     title.text = "AI Explorer：互動式 AI 入門教學網站"
-    subtitle.text = "專案期中/期末成果報告規劃\n\n基於 ReadMe.md 內容"
+    subtitle.text = "期中成果報告\n\n「點 → 看 → 懂」的 AI 新手村"
 
-    # Slide 2: 專案定位與核心理念
+    # Slide 2: 專案動機與目標
     bullet_slide_layout = prs.slide_layouts[1]
-    add_slide(prs, bullet_slide_layout, "1. 專案定位與核心理念", [
-        "目標：讓「完全不懂 AI」的使用者也能逐步理解 AI 概念",
-        "目標受眾：",
-        ["同學、家人、非資訊背景的一般使用者"],
-        "核心體驗：",
-        ["點擊互動 + 短影片 + 可視化圖形 + 白話解釋", "「點 → 看 → 懂」（降低閱讀門檻）"],
-        "呈現方式：以網站作為成果報告展示"
+    add_slide(prs, bullet_slide_layout, "1. 專案動機與目標", [
+        "核心動機：",
+        ["解決一般人對 AI 的距離感與學習門檻", "將艱澀的 AI 知識轉化為視覺化、可互動的內容"],
+        "專案目標：",
+        ["打造一個「完全不懂 AI」也能輕鬆上手的教學網站", "使用者透過「點擊互動 + 短影片 + 圖解」來學習", "將學習過程遊戲化、探索化（AI 新手村概念）"]
     ])
 
-    # Slide 3: 網站整體架構 (Site Map)
-    add_slide(prs, bullet_slide_layout, "2. 網站整體架構 (Site Map)", [
-        "建議至少 4 大頁面：",
-        "1. Home 首頁：引導使用者進入",
-        "2. Learn 互動學習：主頁，可點擊可視化",
-        "3. Cases 應用案例：生活化情境 (醫療/交通/娛樂...)",
-        "4. Report 成果報告：期中/期末進度、技術架構、反思",
-        "5. (可選) Glossary 名詞小字典：讓新手隨時查"
+    # Slide 3: 受眾分析
+    add_slide(prs, bullet_slide_layout, "2. 受眾分析", [
+        "目標對象（Target Audience）：",
+        ["同學、家人、非資訊背景的社會大眾", "想了解 AI 卻不知從何開始的初學者"],
+        "痛點分析：",
+        ["名詞太多（機器學習、深度學習、神經網路太抽象）", "缺乏直觀的理解方式", "長篇大論的文字容易讓人放棄"],
+        "我們的解決方案：",
+        ["互動式可視化圖表 (AI Pipeline / 知識圖譜)", "每次只呈現一個核心概念 (白話解釋 + 短影片 + 測驗)"]
     ])
 
-    # Slide 4: 主互動頁設計
-    add_slide(prs, bullet_slide_layout, "3. 主互動頁設計：可點擊可視化", [
-        "版面配置：",
-        ["左側：可點擊可視化圖（例如：流程圖 / 圈圈圖 / 卡片）", "右側：解釋面板（影片 + 圖解 + 文字 + 小測驗）"],
-        "主要可視化主題：AI Pipeline (流程圖)",
-        ["資料蒐集 → 前處理 → 模型 → 訓練 → 評估 → 部署", "每個節點都能點擊並在右側切換內容"]
+    # Slide 4: 網站整體架構 (Site Map)
+    add_slide(prs, bullet_slide_layout, "3. 網站架構與互動設計", [
+        "已完成的核心架構：",
+        ["1. Home 首頁：引導使用者進入，展示核心理念", "2. Learn (Map) 互動學習：主頁，提供 AI 互動地圖", "3. Topics / Cases：技術主題清單與應用簡介", "4. About：團隊介紹與專案說明"],
+        "核心互動設計 (Learn 頁面)：",
+        ["左側：動態可視化地圖 (SVG)", "右側：解釋面板 (影片 + 圖解 + 白話說明)", "操作流程：點擊節點 → 面板立即更新 → 觀看與學習"]
     ])
 
-    # Slide 5: 「解釋面板」內容模板
-    add_slide(prs, bullet_slide_layout, "4. 每個節點的「解釋面板」", [
-        "點擊任一概念節點後，右側面板固定顯示 6 大元素：",
-        "1. 一句話白話版（大標題）",
-        "2. 30–60 秒短影片（YouTube / mp4）",
-        "3. 可視化圖形（SVG / 圖片 / GIF / 簡易動畫）",
-        "4. 生活例子（1–2 個）",
-        "5. 常見誤解（1 句澄清）",
-        "6. 小測驗（1 題，立即回饋）",
-        "優點：新手每次看到的版型都一樣，學習負擔更低！"
+    # Slide 5: 目前完成項目
+    add_slide(prs, bullet_slide_layout, "4. 階段性成果 (目前完成進度)", [
+        "基礎建設與資料層：",
+        ["完成專案資料夾結構與開發設定", "建置 22 個 AI 概念節點的 JSON 資料庫"],
+        "前端開發與設計 (路徑 A - 純前端實作)：",
+        ["完成 CSS 全域樣式與地圖專用設計系統", "完成 index.html, map.html, topics.html 等核心頁面", "實作動態 SVG AI 地圖互動邏輯 (map.js)"],
+        "內容層整合：",
+        ["成功整合 NotebookLM 匯出的學習內容", "右側面板可動態播放 YouTube 影片並顯示說明"]
     ])
 
-    # Slide 6: 期中進度規劃
-    add_slide(prs, bullet_slide_layout, "5. 期中進度規劃 (50%)", [
-        "重點：可展示的「互動教材雛形」",
-        "完成項目：",
-        ["完成網站基本架構：Home / Learn / Cases / Report", "Learn 主互動頁：AI Pipeline 6 個節點「可點擊切換」", "每個節點至少具備：1句話白話解釋、1個影片、1張圖", "Report 頁 (期中版)：專案動機、目前完成進度、期末計畫"]
+    # Slide 6: Demo 展示
+    add_slide(prs, bullet_slide_layout, "5. 成果展示 (Demo)", [
+        "展示重點：",
+        ["1. 首頁進入地圖的引導流程", "2. 點擊 AI 節點 (例如：機器學習、深度學習)", "3. 觀察右側面板的「影片 + 說明」即時更新", "4. 展現流暢的 RWD 版面與 UI 回饋體驗"],
+        "(切換至瀏覽器進行實際操作展示)"
     ])
 
-    # Slide 7: 期末進度規劃
-    add_slide(prs, bullet_slide_layout, "6. 期末進度規劃 (50%)", [
-        "重點：把互動與可視化「做完整、做得像產品」",
-        "完成項目：",
-        ["每個節點補齊面板：生活例子 + 常見誤解 + 小測驗", "加入「學習總測驗」(完成後給予等級/建議)", "Cases 頁面擴充：至少 3 個應用案例", "UI/UX 加強：手機版 RWD、點擊動畫、載入提示", "Report 頁 (期末版)：技術架構圖、測試結果與反思"]
+    # Slide 7: 期末工作規劃
+    add_slide(prs, bullet_slide_layout, "6. 期末工作規劃 (剩餘 50%)", [
+        "內容與互動深化：",
+        ["補齊所有 22 個節點的完整內容 (生活例子、常見誤解)", "每個節點加入「小測驗」與立即回饋機制", "加入「學習總測驗」單元，提供等級評估"],
+        "進階功能與優化：",
+        ["擴充 Cases 應用案例 (醫療/交通/教育等具體情境)", "深化 UI/UX (手機版 RWD 調整、動畫回饋)", "建立完整的 Report 反思與系統架構頁面"],
+        "預計期末將能提供完整的產品級體驗！"
     ])
 
-    # Slide 8: 技術選型建議
-    add_slide(prs, bullet_slide_layout, "7. 技術選型建議", [
-        "路線 A：純前端（最穩、最適合期中）",
-        ["HTML / CSS / JavaScript", "UI：Bootstrap 或 Tailwind", "部署：GitHub Pages"],
-        "路線 B：前端 + 輕後端（期末加分）",
-        ["加入後端：Flask 或 FastAPI", "可加功能：文字分類、簡單問答、互動小工具", "部署：Render 或 Railway"]
-    ])
-
-    # Slide 9: 驗收標準
-    add_slide(prs, bullet_slide_layout, "8. 驗收標準與里程碑", [
-        "驗收標準：",
-        ["使用者不用懂 AI，也能「點擊學習」", "概念都有白話解釋、短影片、圖示、小測驗立即回饋", "網站適合當成果報告展示（可投影、可手機看）"],
-        "核心里程碑：",
-        ["W1-W3：架構建立、完成 Learn 頁雛形 (期中展示)", "W4-W6：內容補齊、增加測驗與案例", "W7-W8：擴充 Cases、UI優化、Report完整化 (期末展示)"]
-    ])
-
-    prs.save(r'd:\AIClass\ppt\AI_Explorer_Readme_Presentation.pptx')
-    print("PPT generated successfully!")
+    prs.save(r'd:\AIClass\ppt\AI_Explorer_Midterm_Report.pptx')
+    print("Midterm PPT generated successfully!")
 
 if __name__ == '__main__':
-    create_presentation()
+    create_midterm_presentation()
