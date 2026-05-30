@@ -28,16 +28,20 @@
         <div>
           <span class="eyebrow">Interactive Timeline</span>
           <h1>探索 AI 的演進地圖</h1>
-          <p class="lead">從圖靈測試到 AI Native Workflows，用 25 個關鍵節點快速理解 AI 歷史。每個節點都有白話解釋、人物背景、生活應用與小測驗。</p>
+          <p class="lead">從圖靈測試到 AI Native Workflows，用 33 個關鍵節點快速理解 AI 歷史。每個節點都有白話解釋、人物背景、生活應用與小測驗。</p>
+          <form class="hero-search" action="map.html" method="GET" onsubmit="if(!this.q.value.trim()){ window.location.href='map.html'; return false; }">
+            <input type="search" name="q" class="search-input" placeholder="搜尋 AI 關鍵字..." aria-label="搜尋節點">
+            <button type="submit" class="btn btn-primary">搜尋</button>
+          </form>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="map.html">進入地圖</a>
+            <a class="btn btn-secondary" href="map.html">進入地圖</a>
             <a class="btn btn-secondary" href="topics.html">查看主題索引</a>
           </div>
         </div>
         <aside class="panel hero-card">
           <h2>你會在這裡學到</h2>
           <div class="stat-grid">
-            <div class="stat-item"><strong>25</strong>歷史節點</div>
+            <div class="stat-item"><strong>33</strong>歷史節點</div>
             <div class="stat-item"><strong>5</strong>技術類別</div>
             <div class="stat-item"><strong>76+</strong>年演進脈絡</div>
             <div class="stat-item"><strong>1</strong>張互動地圖</div>
@@ -65,7 +69,7 @@
   </main>
 
   <footer class="footer">
-    <div class="container">AI Explorer · Midterm Build</div>
+    <div class="container">AI Explorer · Interactive AI Map</div>
   </footer>
 
   <script src="js/main.js"></script>

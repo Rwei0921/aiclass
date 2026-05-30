@@ -842,6 +842,13 @@ function setupSearch() {
     renderMap();
     renderPanel();
   });
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var q = urlParams.get("q");
+  if (q) {
+    searchInput.value = q;
+    searchInput.dispatchEvent(new Event("input"));
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {

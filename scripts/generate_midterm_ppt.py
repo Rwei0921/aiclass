@@ -509,7 +509,7 @@ def main():
 
     slides.append(add_image_bullets_slide(prs, "節點 Demo 1 — 圖靈測試", visuals["turing"], [
         "年份：1950，類別：理論基礎",
-        "目前唯一完成 NotebookLM 同步的節點",
+        "NotebookLM 同步內容可覆蓋預設摘要、影片與來源",
         "本地 mp4 影片可直接在面板播放",
         "小測驗可即時顯示正確與錯誤回饋",
     ]))
