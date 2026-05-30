@@ -3,7 +3,10 @@ var MAP_STATE = {
   currentEra: "all",
   viewBox: { x: 0, y: 0, w: 1820, h: 2200 },
   dragging: false,
-  dragStart: null
+  dragStart: null,
+  searchQuery: "",
+  matchedIds: [],
+  relatedIds: []
 };
 
 var MAP_CATEGORY_COLORS = {
@@ -149,6 +152,11 @@ function getEraByKey(key) {
 }
 
 function getVisibleNodes() {
+  if (MAP_STATE.searchQuery.trim()) {
+    return AI_NODES.filter(function(node) {
+      return MAP_STATE.matchedIds.includes(node.id) || MAP_STATE.relatedIds.includes(node.id);
+    });
+  }
   var era = getEraByKey(MAP_STATE.currentEra) || MAP_ERA_GROUPS[0];
   return AI_NODES.filter(function (node) {
     return node.year >= era.start && node.year <= era.end;
@@ -510,7 +518,12 @@ function renderMap() {
       var bend = Math.max(45, Math.min(150, Math.abs(dy) * 0.28));
 
       var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute("class", "map-connection");
+      var isHighlight = MAP_STATE.searchQuery && (
+        (MAP_STATE.matchedIds.includes(node.id) && MAP_STATE.relatedIds.includes(target.id)) ||
+        (MAP_STATE.matchedIds.includes(target.id) && MAP_STATE.relatedIds.includes(node.id)) ||
+        (MAP_STATE.matchedIds.includes(node.id) && MAP_STATE.matchedIds.includes(target.id))
+      );
+      path.setAttribute("class", "map-connection" + (isHighlight ? " search-highlight" : ""));
       path.setAttribute(
         "d",
         "M " + fromPos.x + " " + fromPos.y +
@@ -529,7 +542,10 @@ function renderMap() {
   visibleNodes.forEach(function (node) {
     var nodePos = nodePositions[node.id] || getNodeRenderPosition(node);
     var group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    group.setAttribute("class", "map-node" + (MAP_STATE.selectedNodeId === node.id ? " active" : ""));
+    var isMatched = MAP_STATE.searchQuery && MAP_STATE.matchedIds.includes(node.id);
+    var isRelated = MAP_STATE.searchQuery && MAP_STATE.relatedIds.includes(node.id);
+    var searchClass = isMatched ? " search-match" : (isRelated ? " search-related" : "");
+    group.setAttribute("class", "map-node" + (MAP_STATE.selectedNodeId === node.id ? " active" : "") + searchClass);
     group.setAttribute("transform", "translate(" + nodePos.x + " " + nodePos.y + ")");
 
     var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -555,6 +571,53 @@ function renderMap() {
   });
   svg.appendChild(nodeLayer);
   svg.appendChild(labelLayer);
+}
+
+function renderPapers(node) {
+  var papers = node.papers || [];
+  if (!papers.length) {
+    return "<h4>相關論文</h4><p class='muted'>此節點尚未整理相關論文連結。</p>";
+  }
+  return (
+    "<h4>相關論文</h4>" +
+    "<ul class='source-list'>" +
+    papers.map(function (paper) {
+      return (
+        "<li class='source-item'>" +
+        "<a href='" + escapeHTML(paper.url) + "' target='_blank' rel='noopener noreferrer'>" + escapeHTML(paper.title) + "</a>" +
+        (paper.publisher || paper.year ? "<small>" + escapeHTML([paper.publisher, paper.year].filter(Boolean).join(" · ")) + "</small>" : "") +
+        "</li>"
+      );
+    }).join("") +
+    "</ul>"
+  );
+}
+
+function getRelatedNodes(node) {
+  var relatedIds = [];
+  (node.connections || []).forEach(function (id) {
+    if (!relatedIds.includes(id)) {
+      relatedIds.push(id);
+    }
+  });
+  AI_NODES.forEach(function (candidate) {
+    if (candidate.connections && candidate.connections.includes(node.id) && !relatedIds.includes(candidate.id)) {
+      relatedIds.push(candidate.id);
+    }
+  });
+  return relatedIds.map(function (id) {
+    return AI_NODES.find(function (candidate) { return candidate.id === id; });
+  }).filter(Boolean);
+}
+
+function renderRelatedNodes(node) {
+  var relatedNodes = getRelatedNodes(node);
+  if (!relatedNodes.length) {
+    return "<h4>相關節點</h4><p class='muted'>此節點尚未設定相關節點。</p>";
+  }
+  return "<h4>相關節點</h4><ul class='related-node-list'>" + relatedNodes.map(function (related) {
+    return "<li>" + escapeHTML(related.year + " " + related.name) + "</li>";
+  }).join("") + "</ul>";
 }
 
 function renderPanel() {
@@ -596,8 +659,10 @@ function renderPanel() {
     "<p>" + escapeHTML(summary) + "</p>" +
     "<h4>影片</h4>" +
     renderVideoBlock(node, notebook) +
+    renderPapers(node) +
     "<h4>資料來源</h4>" +
     renderSources(notebook) +
+    renderRelatedNodes(node) +
     "<h4>常見誤解</h4>" +
     "<p>" + escapeHTML(node.misconception) + "</p>" +
     "<div class='quiz'>" +
@@ -713,15 +778,82 @@ function loadNotebookContent() {
     });
 }
 
+function setupSearch() {
+  var searchInput = document.getElementById("keyword-search");
+  var searchStatus = document.getElementById("search-status");
+  if (!searchInput) return;
+
+  searchInput.addEventListener("input", function (e) {
+    var query = e.target.value.trim();
+    MAP_STATE.searchQuery = query;
+    
+    if (!query) {
+      MAP_STATE.matchedIds = [];
+      MAP_STATE.relatedIds = [];
+    } else {
+      var q = query.toLowerCase();
+      var matched = [];
+      AI_NODES.forEach(function(node) {
+        var text = [
+          node.name, node.nameEn, node.tagline, node.description,
+          node.figure, (node.applications || []).join(" "), node.misconception, node.category,
+          (node.papers || []).map(function (paper) { return paper.title; }).join(" ")
+        ].join(" ").toLowerCase();
+        if (text.includes(q)) {
+          matched.push(node.id);
+        }
+      });
+      
+      var related = [];
+      AI_NODES.forEach(function(node) {
+        if (matched.includes(node.id)) {
+          node.connections.forEach(function(cid) {
+            if (!matched.includes(cid) && !related.includes(cid)) related.push(cid);
+          });
+        } else {
+          node.connections.forEach(function(cid) {
+            if (matched.includes(cid) && !related.includes(node.id)) related.push(node.id);
+          });
+        }
+      });
+      
+      MAP_STATE.matchedIds = matched;
+      MAP_STATE.relatedIds = related;
+    }
+    if (searchStatus) {
+      searchStatus.textContent = query ?
+        "找到 " + MAP_STATE.matchedIds.length + " 個命中節點，顯示 " + MAP_STATE.relatedIds.length + " 個直接相關節點。" :
+        "輸入關鍵字會顯示命中節點與直接相關節點。";
+    }
+    
+    var visible = getVisibleNodes();
+    if (query && MAP_STATE.matchedIds.length) {
+      var preferredMatch = AI_NODES.find(function (node) {
+        var directText = [node.id, node.name, node.nameEn].join(" ").toLowerCase();
+        return MAP_STATE.matchedIds.includes(node.id) && directText.includes(query.toLowerCase());
+      });
+      MAP_STATE.selectedNodeId = preferredMatch ? preferredMatch.id : MAP_STATE.matchedIds[0];
+    } else if (visible.length > 0 && !visible.find(function(n) { return n.id === MAP_STATE.selectedNodeId; })) {
+      MAP_STATE.selectedNodeId = visible[0].id;
+    } else if (visible.length === 0) {
+      MAP_STATE.selectedNodeId = null;
+    }
+    
+    renderMap();
+    renderPanel();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   if (typeof AI_NODES === "undefined") {
     return;
   }
 
   loadNotebookContent().finally(function () {
-    if (document.getElementById("map-svg")) {
-      MAP_STATE.selectedNodeId = AI_NODES[0] ? AI_NODES[0].id : null;
-      renderEraButtons();
+      if (document.getElementById("map-svg")) {
+        MAP_STATE.selectedNodeId = AI_NODES[0] ? AI_NODES[0].id : null;
+        setupSearch();
+        renderEraButtons();
       renderMap();
       renderPanel();
       setupPanZoom();

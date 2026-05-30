@@ -28,7 +28,11 @@
       <span class="eyebrow">Core Page</span>
       <h1>互動 AI 地圖</h1>
       <p class="lead">點擊左側節點，右側會顯示技術說明、代表人物、生活應用與小測驗。可用滑鼠滾輪縮放、拖曳平移。</p>
-      <div class="era-filter" id="era-filter"></div>
+      <div class="filter-controls">
+        <div class="era-filter" id="era-filter"></div>
+        <input type="search" id="keyword-search" placeholder="搜尋關鍵字..." class="search-input" aria-label="搜尋節點">
+        <span class="search-status" id="search-status">輸入關鍵字會顯示命中節點與直接相關節點。</span>
+      </div>
     </section>
 
     <section class="map-layout">

@@ -33,6 +33,101 @@
         }
       ],
       "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "lisp",
+      "title": "LISP 語言",
+      "summary": "LISP 是 John McCarthy 設計、專為早期人工智慧研究打造的重要程式語言，特色是符號運算、遞迴與以清單為核心的資料結構。它讓研究者能用程式表達邏輯推理與知識表示，因此成為早期 AI 研究的重要工具。",
+      "videoUrl": "assets/videos/LISP：活化石的秘密配方.mp4",
+      "sources": [
+        {
+          "title": "Lisp (programming language) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Lisp_(programming_language)",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：LISP 活化石的秘密配方",
+          "url": "assets/videos/LISP：活化石的秘密配方.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "perceptron",
+      "title": "感知機",
+      "summary": "感知機是早期人工神經網路的重要起點，由 Frank Rosenblatt 提出，用加權輸入與閾值判斷模擬人工神經元。它雖然只能處理線性可分問題，但奠定了後續神經網路與深度學習的基本概念。",
+      "videoUrl": "assets/videos/人工智慧的真正起點：感知器.mp4",
+      "sources": [
+        {
+          "title": "Perceptron - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Perceptron",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：人工智慧的真正起點：感知器",
+          "url": "assets/videos/人工智慧的真正起點：感知器.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "ai-winter-1",
+      "title": "第一次 AI 寒冬",
+      "summary": "第一次 AI 寒冬代表早期人工智慧研究在過度承諾後遭遇資金與信任退潮。它提醒研究者：AI 技術需要可驗證成果，否則期待落差會快速反噬研究與產業投入。",
+      "videoUrl": "assets/videos/人工智慧低谷的循環.mp4",
+      "sources": [
+        {
+          "title": "AI winter - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/AI_winter",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：人工智慧低谷的循環",
+          "url": "assets/videos/人工智慧低谷的循環.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "expert-systems",
+      "title": "專家系統",
+      "summary": "專家系統是早期人工智慧的重要代表，透過人工整理的知識庫與規則推理，模擬特定領域專家的判斷。它曾在醫療診斷、金融評估與工業故障排除等場景受到重視，但也暴露出維護成本高、難以自動學習新知識的限制。",
+      "videoUrl": "assets/videos/專家系統的崛起.mp4",
+      "sources": [
+        {
+          "title": "Expert system - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Expert_system",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：專家系統的崛起",
+          "url": "assets/videos/專家系統的崛起.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "ai-winter-2",
+      "title": "第二次 AI 寒冬",
+      "summary": "第二次 AI 寒冬主要源於專家系統商業化後的維護成本與能力限制。當昂貴系統難以處理真實世界的複雜變化，企業與政府資金再次退潮，形成 AI 發展史上的第二次低谷。",
+      "videoUrl": "assets/videos/人工智慧低谷的循環.mp4",
+      "sources": [
+        {
+          "title": "AI winter - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/AI_winter",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：人工智慧低谷的循環",
+          "url": "assets/videos/人工智慧低谷的循環.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
     }
   ]
 }

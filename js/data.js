@@ -27,6 +27,7 @@ const AI_NODES = [
       explanation: "圖靈測試重點在於「模仿能力」而非速度或記憶，能騙過人類才算通過。"
     },
     connections: ["perceptron", "lisp"],
+    papers: [{"title":"Computing Machinery and Intelligence","url":"https://academic.oup.com/mind/article/LIX/236/433/986238"}],
     position: { x: 120, y: 250 }
   },
   {
@@ -52,6 +53,7 @@ const AI_NODES = [
       explanation: "感知機的設計靈感來自生物神經元：接收輸入訊號，加權後決定是否「激發」輸出。"
     },
     connections: ["backprop", "deep-belief"],
+    papers: [{"title":"The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain","url":"https://psycnet.apa.org/record/1959-09865-001"}],
     position: { x: 220, y: 150 }
   },
   {
@@ -77,6 +79,7 @@ const AI_NODES = [
       explanation: "LISP 設計之初就是為了處理符號邏輯和遞迴，是 AI 研究早期的主流工具。"
     },
     connections: ["expert-systems"],
+    papers: [{"title":"Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I","url":"https://dl.acm.org/doi/10.1145/367177.367199"}],
     position: { x: 240, y: 350 }
   },
   {
@@ -127,6 +130,7 @@ const AI_NODES = [
       explanation: "早期專家系統依賴人工編碼知識，這也是它的最大限制——不能自動學習新知識。"
     },
     connections: ["ai-winter-2", "backprop"],
+    papers: [{"title":"MYCIN: A Computer-Based Consultative System for Blood Infections","url":"https://pubmed.ncbi.nlm.nih.gov/11643339/"}],
     position: { x: 420, y: 300 }
   },
   {
@@ -152,6 +156,7 @@ const AI_NODES = [
       explanation: "倒傳遞計算每個權重對「錯誤」的貢獻程度，讓網路知道要怎麼調整才能更準確。"
     },
     connections: ["ai-winter-2", "deep-belief", "svm"],
+    papers: [{"title":"Learning representations by back-propagating errors","url":"https://www.nature.com/articles/323533a0"}],
     position: { x: 470, y: 150 }
   },
   {
@@ -202,6 +207,7 @@ const AI_NODES = [
       explanation: "最大化邊界（margin）是 SVM 的核心，這讓它對新資料有更好的泛化能力。"
     },
     connections: ["random-forest", "deep-belief"],
+    papers: [{"title":"Support-vector networks","url":"https://link.springer.com/article/10.1007/BF00994018"}],
     position: { x: 600, y: 200 }
   },
   {
@@ -252,6 +258,7 @@ const AI_NODES = [
       explanation: "隨機森林 = 很多棵決策樹，各自獨立預測後「多數決」，減少錯誤率。"
     },
     connections: ["deep-belief"],
+    papers: [{"title":"Random Forests","url":"https://link.springer.com/article/10.1023/A:1010933404324"}],
     position: { x: 720, y: 250 }
   },
   {
@@ -277,6 +284,7 @@ const AI_NODES = [
       explanation: "2006 年前大家認為深層網路太難訓練，Hinton 用逐層預訓練突破了這個瓶頸。"
     },
     connections: ["alexnet", "lstm"],
+    papers: [{"title":"A fast learning algorithm for deep belief nets","url":"https://direct.mit.edu/neco/article/18/7/1527/7045/A-Fast-Learning-Algorithm-for-Deep-Belief-Nets"}],
     position: { x: 800, y: 150 }
   },
   {
@@ -302,6 +310,7 @@ const AI_NODES = [
       explanation: "AlexNet 的成功讓整個 AI 研究界從傳統機器學習轉向深度學習。"
     },
     connections: ["word2vec", "gan"],
+    papers: [{"title":"ImageNet Classification with Deep Convolutional Neural Networks","url":"https://proceedings.neurips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html"}],
     position: { x: 880, y: 200 }
   },
   {
@@ -327,6 +336,7 @@ const AI_NODES = [
       explanation: "向量化讓電腦能做語意運算，「國王 − 男人 + 女人 ≈ 女王」就是最著名的例子。"
     },
     connections: ["bert", "transformer"],
+    papers: [{"title":"Efficient Estimation of Word Representations in Vector Space","url":"https://arxiv.org/abs/1301.3781"}],
     position: { x: 930, y: 100 }
   },
   {
@@ -352,6 +362,7 @@ const AI_NODES = [
       explanation: "生成器想以假亂真，判別器想揭穿假貨，雙方競爭讓生成品質越來越高。"
     },
     connections: ["diffusion"],
+    papers: [{"title":"Generative Adversarial Nets","url":"https://proceedings.neurips.cc/paper/2014/hash/5ca3e9b122f61f8f06494c97b1afccf3-Abstract.html"}],
     position: { x: 960, y: 320 }
   },
   {
@@ -377,6 +388,7 @@ const AI_NODES = [
       explanation: "普通 RNN 訓練時梯度會消失，LSTM 的記憶門讓它能記住重要的「舊資訊」。"
     },
     connections: ["transformer"],
+    papers: [{"title":"Long Short-Term Memory","url":"https://direct.mit.edu/neco/article/9/8/1735/6109/Long-Short-Term-Memory"}],
     position: { x: 970, y: 210 }
   },
   {
@@ -402,6 +414,7 @@ const AI_NODES = [
       explanation: "AlphaGo 透過強化學習「自己和自己下棋進步」，這是 AI 的革命性突破。"
     },
     connections: ["chatgpt", "gpt3"],
+    papers: [{"title":"Mastering the game of Go with deep neural networks and tree search","url":"https://www.nature.com/articles/nature16961"}],
     position: { x: 1020, y: 380 }
   },
   {
@@ -427,6 +440,7 @@ const AI_NODES = [
       explanation: "Self-Attention 讓每個詞能同時「關注」所有其他詞，比 RNN 的逐步處理快也準。"
     },
     connections: ["bert", "gpt3"],
+    papers: [{"title":"Attention Is All You Need","url":"https://arxiv.org/abs/1706.03762"}],
     position: { x: 1060, y: 150 }
   },
   {
@@ -452,6 +466,7 @@ const AI_NODES = [
       explanation: "傳統模型只從左讀到右，BERT 同時看兩邊上下文，讓語意理解更準確。"
     },
     connections: ["gpt3"],
+    papers: [{"title":"BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding","url":"https://arxiv.org/abs/1810.04805"}],
     position: { x: 1120, y: 100 }
   },
   {
@@ -477,6 +492,7 @@ const AI_NODES = [
       explanation: "「Few-shot learning」讓 GPT-3 只需要幾個例子甚至零例子，就能完成新任務——這是巨大突破。"
     },
     connections: ["chatgpt"],
+    papers: [{"title":"Language Models are Few-Shot Learners","url":"https://arxiv.org/abs/2005.14165"}],
     position: { x: 1170, y: 200 }
   },
   {
@@ -502,6 +518,7 @@ const AI_NODES = [
       explanation: "訓練時加入雜訊，讓模型學會逆向還原；推理時從純雜訊開始，一步步生成圖像。"
     },
     connections: ["chatgpt", "multimodal", "veo-imagen"],
+    papers: [{"title":"Denoising Diffusion Probabilistic Models","url":"https://arxiv.org/abs/2006.11239"}],
     position: { x: 1180, y: 350 }
   },
   {
@@ -677,6 +694,7 @@ const AI_NODES = [
       explanation: "AlphaFold 3 將預測範圍從蛋白質擴展到 DNA、RNA、配體等所有重要生命分子的結構。"
     },
     connections: ["gemini-15-pro", "alphageometry"],
+    papers: [{"title":"Accurate structure prediction of biomolecular interactions with AlphaFold 3","url":"https://www.nature.com/articles/s41586-024-07487-w"}],
     position: { x: 1480, y: 300 }
   },
   {
@@ -702,6 +720,7 @@ const AI_NODES = [
       explanation: "AlphaGeometry 的創新在於混合了直覺式的神經網路和嚴謹的符號推理，兩者互補。"
     },
     connections: ["alphafold3", "reasoning-models", "gemini3-deep-think"],
+    papers: [{"title":"Solving olympiad geometry without human demonstrations","url":"https://www.nature.com/articles/s41586-023-06747-5"}],
     position: { x: 1500, y: 170 }
   },
   {
