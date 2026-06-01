@@ -204,6 +204,120 @@
         }
       ],
       "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "deep-belief",
+      "title": "深度信念網路",
+      "summary": "深度信念網路展示了深層神經網路可以透過逐層預訓練被有效訓練，讓深度學習在算力與資料逐漸成熟後重新受到重視。",
+      "videoUrl": "assets/videos/解密深度信念網絡.mp4",
+      "sources": [
+        {
+          "title": "Deep belief network - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Deep_belief_network",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：解密深度信念網絡",
+          "url": "assets/videos/解密深度信念網絡.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "alexnet",
+      "title": "AlexNet",
+      "summary": "AlexNet 在 ImageNet 競賽中大幅領先傳統方法，證明 GPU、大資料與深度卷積神經網路的組合能改寫電腦視覺，是深度學習成為主流的重要轉折點。",
+      "videoUrl": "assets/videos/認識_AlexNet.mp4",
+      "sources": [
+        {
+          "title": "AlexNet - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/AlexNet",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：認識 AlexNet",
+          "url": "assets/videos/認識_AlexNet.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "word2vec",
+      "title": "Word2Vec",
+      "summary": "Word2Vec 將文字轉換成能捕捉語意關係的向量，讓電腦可以用數學方式處理詞語相似度與語意類比，是自然語言處理的重要基礎。",
+      "videoUrl": "assets/videos/Word2vec：地圖與遊戲.mp4",
+      "sources": [
+        {
+          "title": "Word2vec - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Word2vec",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：Word2vec 地圖與遊戲",
+          "url": "assets/videos/Word2vec：地圖與遊戲.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "lstm",
+      "title": "LSTM / RNN",
+      "summary": "RNN 能處理序列資料，而 LSTM 透過門控機制改善長期記憶消失問題，讓模型更能掌握文字、語音與時間序列中的前後關係。",
+      "videoUrl": "assets/videos/循環神經網路與長短期記憶入門解析.mp4",
+      "sources": [
+        {
+          "title": "Long short-term memory - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Long_short-term_memory",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：循環神經網路與長短期記憶入門解析",
+          "url": "assets/videos/循環神經網路與長短期記憶入門解析.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "alphago",
+      "title": "AlphaGo",
+      "summary": "AlphaGo 結合深度學習、強化學習與樹搜尋，在圍棋這類複雜決策問題上擊敗頂尖人類棋手，代表 AI 從規則搜尋走向自我學習的重要突破。",
+      "videoUrl": "assets/videos/AlphaGo：無師自通的AI天才.mp4",
+      "sources": [
+        {
+          "title": "AlphaGo - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/AlphaGo",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：AlphaGo 無師自通的 AI 天才",
+          "url": "assets/videos/AlphaGo：無師自通的AI天才.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "transformer",
+      "title": "Transformer 架構",
+      "summary": "Transformer 以自注意力機制取代傳統循序處理，讓模型能平行理解文字中各位置的關係，成為 BERT、GPT 等現代大型語言模型的核心架構。",
+      "videoUrl": "assets/videos/解密現代AI的核心.mp4",
+      "sources": [
+        {
+          "title": "Transformer (deep learning architecture) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：解密現代 AI 的核心",
+          "url": "assets/videos/解密現代AI的核心.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
     }
   ]
 }
