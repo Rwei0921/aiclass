@@ -318,6 +318,120 @@
         }
       ],
       "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "gan",
+      "title": "GAN 生成對抗網路",
+      "summary": "GAN 透過生成器與判別器互相競爭，讓模型逐步學會產生更逼真的資料，是生成式 AI 與影像生成發展中的重要技術。",
+      "videoUrl": "assets/videos/生成對抗網路.mp4",
+      "sources": [
+        {
+          "title": "Generative adversarial network - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Generative_adversarial_network",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：生成對抗網路",
+          "url": "assets/videos/生成對抗網路.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "bert",
+      "title": "BERT",
+      "summary": "BERT 透過 Transformer 編碼器同時理解文字左右兩側的語境，大幅提升自然語言理解任務的表現，是搜尋、問答與文本分類的重要里程碑。",
+      "videoUrl": "assets/videos/解碼_BERT：AI_如何終於學會閱讀.mp4",
+      "sources": [
+        {
+          "title": "BERT (language model) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/BERT_(language_model)",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：解碼 BERT：AI 如何終於學會閱讀",
+          "url": "assets/videos/解碼_BERT：AI_如何終於學會閱讀.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "gpt3",
+      "title": "GPT-3",
+      "summary": "GPT-3 展示大型語言模型在規模化後出現的少樣本與零樣本能力，讓寫作、翻譯、程式生成與對話式 AI 進入新的發展階段。",
+      "videoUrl": "assets/videos/解密_GPT-3：AI_帶來的典範轉移.mp4",
+      "sources": [
+        {
+          "title": "GPT-3 - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/GPT-3",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：解密 GPT-3：AI 帶來的典範轉移",
+          "url": "assets/videos/解密_GPT-3：AI_帶來的典範轉移.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "diffusion",
+      "title": "Diffusion Model",
+      "summary": "擴散模型學習從雜訊逐步還原出清晰內容，成為 Stable Diffusion、DALL-E 與 AI 影像生成的重要基礎。",
+      "videoUrl": "assets/videos/揭開擴散模型的神秘面紗.mp4",
+      "sources": [
+        {
+          "title": "Diffusion model - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Diffusion_model",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：揭開擴散模型的神秘面紗",
+          "url": "assets/videos/揭開擴散模型的神秘面紗.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "chatgpt",
+      "title": "ChatGPT",
+      "summary": "ChatGPT 把大型語言模型變成一般使用者能直接操作的聊天產品，讓生成式 AI 快速進入教育、辦公、客服與軟體開發等日常場景。",
+      "videoUrl": "assets/videos/雙面刃：ChatGPT_在學業中的影響.mp4",
+      "sources": [
+        {
+          "title": "ChatGPT - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/ChatGPT",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：雙面刃：ChatGPT 在學業中的影響",
+          "url": "assets/videos/雙面刃：ChatGPT_在學業中的影響.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "multimodal",
+      "title": "Multimodal AI",
+      "summary": "多模態 AI 能整合文字、圖片、聲音與影片等不同形式的資訊，讓模型從單純讀文字進一步走向跨媒介理解與互動。",
+      "videoUrl": "assets/videos/多模態學習：AI的全新感官世界.mp4",
+      "sources": [
+        {
+          "title": "Multimodal learning - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Multimodal_learning",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "本地影片檔：多模態學習：AI 的全新感官世界",
+          "url": "assets/videos/多模態學習：AI的全新感官世界.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
     }
   ]
 }
