@@ -432,6 +432,96 @@
         }
       ],
       "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "reasoning-models",
+      "title": "推理型模型",
+      "summary": "推理型模型強調把問題拆成多步驟處理，在數學、程式、規劃與研究分析等任務上，比單純快速生成答案更重視邏輯與可驗證的求解過程。",
+      "videoUrl": "assets/videos/從直覺到深思熟慮：解析推理_AI.mp4",
+      "sources": [
+        {
+          "title": "本地影片檔：從直覺到深思熟慮：解析推理 AI",
+          "url": "assets/videos/從直覺到深思熟慮：解析推理_AI.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "gemini-15-pro",
+      "title": "Gemini 1.5 Pro",
+      "summary": "Gemini 1.5 Pro 以超長上下文視窗與多模態能力為特色，讓模型能處理長文件、長影片與大型程式碼庫，是長內容理解的重要里程碑。",
+      "videoUrl": "assets/videos/Gemini的演進：從1.0到1.mp4",
+      "sources": [
+        {
+          "title": "本地影片檔：Gemini 的演進：從 1.0 到 1",
+          "url": "assets/videos/Gemini的演進：從1.0到1.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "alphafold3",
+      "title": "AlphaFold 3",
+      "summary": "AlphaFold 3 將結構預測從蛋白質擴展到 DNA、RNA、配體等生命分子交互作用，為藥物研發與生物醫學研究提供新的加速工具。",
+      "videoUrl": "assets/videos/AlphaFold_與蛋白質折疊難題.mp4",
+      "sources": [
+        {
+          "title": "Accurate structure prediction of biomolecular interactions with AlphaFold 3",
+          "url": "https://www.nature.com/articles/s41586-024-07487-w",
+          "publisher": "Nature",
+          "year": 2024
+        },
+        {
+          "title": "本地影片檔：AlphaFold 與蛋白質折疊難題",
+          "url": "assets/videos/AlphaFold_與蛋白質折疊難題.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "alphageometry",
+      "title": "AlphaGeometry",
+      "summary": "AlphaGeometry 結合神經語言模型與符號推理，在奧林匹亞等級幾何題上達到高水準表現，展示 AI 在嚴謹數理推理上的進展。",
+      "videoUrl": "assets/videos/AlphaGeometry：AI_絕妙雙打.mp4",
+      "sources": [
+        {
+          "title": "Solving olympiad geometry without human demonstrations",
+          "url": "https://www.nature.com/articles/s41586-023-06747-5",
+          "publisher": "Nature",
+          "year": 2024
+        },
+        {
+          "title": "本地影片檔：AlphaGeometry：AI 絕妙雙打",
+          "url": "assets/videos/AlphaGeometry：AI_絕妙雙打.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "veo-imagen",
+      "title": "Veo & Imagen 3",
+      "summary": "Veo 與 Imagen 代表 Google 在生成式影像上的突破，讓文字提示能轉成高品質圖片與影片，推動 AI 視覺創作從靜態圖像走向動態影音。",
+      "videoUrl": "assets/videos/從文字到世界：解析_Imagen_與_Veo.mp4",
+      "sources": [
+        {
+          "title": "本地影片檔：從文字到世界：解析 Imagen 與 Veo",
+          "url": "assets/videos/從文字到世界：解析_Imagen_與_Veo.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "genie3-world-model",
+      "title": "Genie 3 世界模型",
+      "summary": "Genie 世界模型能從提示生成可互動的虛擬環境，讓 AI 不只產生單張圖像，而是朝能模擬與操作世界狀態的方向前進。",
+      "videoUrl": "assets/videos/Genie_的魔力.mp4",
+      "sources": [
+        {
+          "title": "本地影片檔：Genie 的魔力",
+          "url": "assets/videos/Genie_的魔力.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
     }
   ]
 }
