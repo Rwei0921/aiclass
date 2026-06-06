@@ -522,6 +522,71 @@
         }
       ],
       "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "ai-agents",
+      "title": "AI Agents",
+      "summary": "AI Agent 能接收目標、拆解步驟並調用工具完成任務，讓 AI 從單純聊天回覆進一步走向可執行工作的數位助理。",
+      "videoUrl": "assets/videos/AI_代理的參考架構與開發模式.mp4",
+      "sources": [
+        {
+          "title": "本地影片檔：AI 代理的參考架構與開發模式",
+          "url": "assets/videos/AI_代理的參考架構與開發模式.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "ai-native-workflows",
+      "title": "AI Native Workflows",
+      "summary": "AI Native Workflows 強調從流程設計一開始就把 AI 視為協作者，讓搜尋、寫作、分析、設計與開發等工作能更自然地整合 AI 能力。",
+      "videoUrl": "assets/videos/揭開_AI_原生工作流的面紗.mp4",
+      "sources": [
+        {
+          "title": "本地影片檔：揭開 AI 原生工作流的面紗",
+          "url": "assets/videos/揭開_AI_原生工作流的面紗.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "gemini3-deep-think",
+      "title": "Gemini 3 Deep Think",
+      "summary": "Gemini 3 Deep Think 聚焦深層推理能力，讓模型能以更穩定的多步驟方式處理數學、程式、科學論證與長程規劃問題。",
+      "videoUrl": "assets/videos/AI_推理革命：深入解析_Deep_Think.mp4",
+      "sources": [
+        {
+          "title": "本地影片檔：AI 推理革命：深入解析 Deep Think",
+          "url": "assets/videos/AI_推理革命：深入解析_Deep_Think.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "veo3-flow",
+      "title": "Veo 3 & Flow",
+      "summary": "Veo 3 與 Flow 代表 AI 影音生成走向更完整的創作流程，從畫面生成延伸到原生音效、影音同步與平台化製作。",
+      "videoUrl": "assets/videos/深度解析：Veo_3.mp4",
+      "sources": [
+        {
+          "title": "本地影片檔：深度解析：Veo 3",
+          "url": "assets/videos/深度解析：Veo_3.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
+    },
+    {
+      "nodeId": "gemini-31-continuous",
+      "title": "Gemini 3.1 持續學習",
+      "summary": "Gemini 3.1 持續學習聚焦模型運作中的知識更新與多代理協作，讓 AI 更接近能長期嵌入企業流程並持續改進的基礎設施。",
+      "videoUrl": "assets/videos/Gemini_3.mp4",
+      "sources": [
+        {
+          "title": "本地影片檔：Gemini 3",
+          "url": "assets/videos/Gemini_3.mp4"
+        }
+      ],
+      "updatedAt": "2026-03-04"
     }
   ]
 }
