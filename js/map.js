@@ -6,8 +6,47 @@ var MAP_STATE = {
   dragStart: null,
   searchQuery: "",
   matchedIds: [],
-  relatedIds: []
+  relatedIds: [],
+  completedQuizzes: []
 };
+
+function loadProgress() {
+  try {
+    var saved = localStorage.getItem("ai_explorer_progress");
+    if (saved) {
+      var parsed = JSON.parse(saved);
+      MAP_STATE.completedQuizzes = Array.isArray(parsed) ? parsed.filter(function (id, index) {
+        return typeof id === "string" && parsed.indexOf(id) === index;
+      }) : [];
+    }
+  } catch (e) {
+    MAP_STATE.completedQuizzes = [];
+  }
+}
+
+function saveProgress(nodeId) {
+  if (!MAP_STATE.completedQuizzes.includes(nodeId)) {
+    MAP_STATE.completedQuizzes.push(nodeId);
+    try {
+      localStorage.setItem("ai_explorer_progress", JSON.stringify(MAP_STATE.completedQuizzes));
+    } catch (e) {
+      console.error("Failed to save progress", e);
+    }
+    updateProgressUI();
+  }
+}
+
+function updateProgressUI() {
+  var progressEl = document.getElementById("quiz-progress");
+  if (progressEl && typeof AI_NODES !== "undefined") {
+    var total = AI_NODES.length;
+    var validIds = AI_NODES.map(function (node) { return node.id; });
+    var completed = MAP_STATE.completedQuizzes.filter(function (id) {
+      return validIds.includes(id);
+    }).length;
+    progressEl.textContent = "測驗進度：" + completed + " / " + total;
+  }
+}
 
 var MAP_CATEGORY_COLORS = {
   theory: "#32c5ff",
@@ -666,7 +705,7 @@ function renderPanel() {
     "<h4>常見誤解</h4>" +
     "<p>" + escapeHTML(node.misconception) + "</p>" +
     "<div class='quiz'>" +
-    "<strong>小測驗</strong>" +
+    "<strong>小測驗</strong>" + (MAP_STATE.completedQuizzes.includes(node.id) ? " <span class='quiz-completed-label' style='color: #89f3c6; font-size: 12px;'>✓ 已完成</span>" : "") +
     "<p>" + escapeHTML(node.quiz.question) + "</p>" +
     "<div class='quiz-options'>" +
     node.quiz.options
@@ -688,6 +727,18 @@ function renderPanel() {
       var correct = selected === node.quiz.answer;
       feedback.className = "quiz-feedback " + (correct ? "good" : "bad");
       feedback.textContent = (correct ? "答對了。" : "再試一次。") + node.quiz.explanation;
+      if (correct) {
+        saveProgress(node.id);
+        var titleStrong = panel.querySelector(".quiz strong");
+        if (titleStrong && !panel.querySelector(".quiz-completed-label")) {
+          var span = document.createElement("span");
+          span.className = "quiz-completed-label";
+          span.style.color = "#89f3c6";
+          span.style.fontSize = "12px";
+          span.textContent = " ✓ 已完成";
+          titleStrong.parentNode.insertBefore(span, titleStrong.nextSibling);
+        }
+      }
     });
   });
 }
@@ -856,6 +907,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
+  loadProgress();
+
   loadNotebookContent().finally(function () {
       if (document.getElementById("map-svg")) {
         MAP_STATE.selectedNodeId = AI_NODES[0] ? AI_NODES[0].id : null;
@@ -864,6 +917,7 @@ document.addEventListener("DOMContentLoaded", function () {
       renderMap();
       renderPanel();
       setupPanZoom();
+      updateProgressUI();
     }
     renderTopics();
   });

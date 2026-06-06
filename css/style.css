@@ -266,6 +266,15 @@ h1 {
   color: var(--muted);
 }
 
+.learning-link {
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.learning-link:hover {
+  background: rgba(50, 197, 255, 0.2);
+}
+
 @media (max-width: 980px) {
   .hero-grid {
     grid-template-columns: 1fr;

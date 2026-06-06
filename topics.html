@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 技術主題索引，依時間整理所有 AI 歷史節點，方便快速瀏覽與檢索。">
   <title>AI Explorer | 主題索引</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +30,51 @@
       <h1>技術主題索引</h1>
       <p class="lead">這頁會依時間整理所有節點，方便你先瀏覽，再進入地圖做互動探索。</p>
       <a class="btn btn-primary" href="map.html">前往互動地圖</a>
+    </section>
+
+    <section class="section" style="padding-top:10px; padding-bottom: 20px;">
+      <article class="panel" style="padding: 20px;">
+        <h2 style="margin-bottom: 16px;">常見技術比較</h2>
+        <p class="muted" style="margin-bottom: 20px;">AI 領域有許多容易混淆的名詞，這裡為你簡單釐清：</p>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 600px;">
+            <thead>
+              <tr style="border-bottom: 1px solid rgba(127, 179, 234, 0.3);">
+                <th style="padding: 12px; color: var(--primary);">比較項目</th>
+                <th style="padding: 12px; color: var(--text);">概念 A</th>
+                <th style="padding: 12px; color: var(--text);">概念 B</th>
+                <th style="padding: 12px; color: var(--muted);">白話解釋</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid rgba(127, 179, 234, 0.1);">
+                <td style="padding: 12px; font-weight: 500;">學習方式</td>
+                <td style="padding: 12px;"><strong>機器學習 (ML)</strong><br><small class="muted">給資料和答案，讓機器自己找規則</small></td>
+                <td style="padding: 12px;"><strong>深度學習 (DL)</strong><br><small class="muted">機器學習的一種，使用多層神經網路</small></td>
+                <td style="padding: 12px; color: var(--muted); font-size: 14px;">深度學習是機器學習的進階版，特別擅長處理影像和語言等複雜資料。</td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(127, 179, 234, 0.1);">
+                <td style="padding: 12px; font-weight: 500;">AI 類型</td>
+                <td style="padding: 12px;"><strong>判別式 AI</strong><br><small class="muted">負責「分類」或「預測」</small></td>
+                <td style="padding: 12px;"><strong>生成式 AI</strong><br><small class="muted">負責「創造」新內容</small></td>
+                <td style="padding: 12px; color: var(--muted); font-size: 14px;">判別式 AI 判斷照片裡是不是貓；生成式 AI 畫出一張不存在的貓的照片。</td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(127, 179, 234, 0.1);">
+                <td style="padding: 12px; font-weight: 500;">語言模型</td>
+                <td style="padding: 12px;"><strong>RNN / LSTM</strong><br><small class="muted">像看書一樣，一個字一個字讀</small></td>
+                <td style="padding: 12px;"><strong>Transformer</strong><br><small class="muted">一眼看完整句話，找出字詞關聯</small></td>
+                <td style="padding: 12px; color: var(--muted); font-size: 14px;">Transformer 可以平行處理，速度更快且能理解更長的上下文，是現代大模型的基礎。</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px; font-weight: 500;">模型架構</td>
+                <td style="padding: 12px;"><strong>BERT</strong><br><small class="muted">擅長「理解」上下文（雙向）</small></td>
+                <td style="padding: 12px;"><strong>GPT</strong><br><small class="muted">擅長「生成」接下來的字（單向）</small></td>
+                <td style="padding: 12px; color: var(--muted); font-size: 14px;">BERT 適合用來做閱讀測驗或分類；GPT 適合用來寫文章或聊天。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
     </section>
 
     <section class="section" style="padding-top:10px;">
