@@ -440,6 +440,12 @@
       "videoUrl": "assets/videos/從直覺到深思熟慮：解析推理_AI.mp4",
       "sources": [
         {
+          "title": "推理語言模型 - 維基百科，自由的百科全書",
+          "url": "https://zh.wikipedia.org/zh-tw/%E6%8E%A8%E7%90%86%E8%AA%9E%E8%A8%80%E6%A8%A1%E5%9E%8B",
+          "publisher": "維基百科",
+          "year": 2026
+        },
+        {
           "title": "本地影片檔：從直覺到深思熟慮：解析推理 AI",
           "url": "assets/videos/從直覺到深思熟慮：解析推理_AI.mp4"
         }
@@ -452,6 +458,18 @@
       "summary": "Gemini 1.5 Pro 以超長上下文視窗與多模態能力為特色，讓模型能處理長文件、長影片與大型程式碼庫，是長內容理解的重要里程碑。",
       "videoUrl": "assets/videos/Gemini的演進：從1.0到1.mp4",
       "sources": [
+        {
+          "title": "Gemini (語言模型) - 維基百科，自由的百科全書",
+          "url": "https://zh.wikipedia.org/zh-tw/Gemini_(%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B)",
+          "publisher": "維基百科",
+          "year": 2026
+        },
+        {
+          "title": "Gemini (language model) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Gemini_(language_model)",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
         {
           "title": "本地影片檔：Gemini 的演進：從 1.0 到 1",
           "url": "assets/videos/Gemini的演進：從1.0到1.mp4"
@@ -504,6 +522,18 @@
       "videoUrl": "assets/videos/從文字到世界：解析_Imagen_與_Veo.mp4",
       "sources": [
         {
+          "title": "Imagen - 維基百科，自由的百科全書",
+          "url": "https://zh.wikipedia.org/zh-tw/Imagen",
+          "publisher": "維基百科",
+          "year": 2026
+        },
+        {
+          "title": "Veo (text-to-video model) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Veo_(text-to-video_model)",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
           "title": "本地影片檔：從文字到世界：解析 Imagen 與 Veo",
           "url": "assets/videos/從文字到世界：解析_Imagen_與_Veo.mp4"
         }
@@ -516,6 +546,12 @@
       "summary": "Genie 世界模型能從提示生成可互動的虛擬環境，讓 AI 不只產生單張圖像，而是朝能模擬與操作世界狀態的方向前進。",
       "videoUrl": "assets/videos/Genie_的魔力.mp4",
       "sources": [
+        {
+          "title": "Genie (world model) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Genie_(world_model)",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
         {
           "title": "本地影片檔：Genie 的魔力",
           "url": "assets/videos/Genie_的魔力.mp4"
@@ -530,6 +566,12 @@
       "videoUrl": "assets/videos/AI_代理的參考架構與開發模式.mp4",
       "sources": [
         {
+          "title": "AI agent - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/AI_agent",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
           "title": "本地影片檔：AI 代理的參考架構與開發模式",
           "url": "assets/videos/AI_代理的參考架構與開發模式.mp4"
         }
@@ -542,6 +584,33 @@
       "summary": "AI Native Workflows 強調從流程設計一開始就把 AI 視為協作者，讓搜尋、寫作、分析、設計與開發等工作能更自然地整合 AI 能力。",
       "videoUrl": "assets/videos/揭開_AI_原生工作流的面紗.mp4",
       "sources": [
+        {
+          "title": "AI Agent Workflows: Everything You Need to Know",
+          "url": "https://www.gooddata.ai/blog/ai-agent-workflows-everything-you-need-to-know/",
+          "publisher": "GoodData"
+        },
+        {
+          "title": "AI agent - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/AI_agent",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "Build comprehensive entity profiles with GPT-4, Wikipedia and vector DB for content",
+          "url": "https://n8n.io/workflows/6972-build-comprehensive-entity-profiles-with-gpt-4-wikipedia-and-vector-db-for-content/",
+          "publisher": "n8n"
+        },
+        {
+          "title": "Our new AI strategy puts Wikipedia's humans first",
+          "url": "https://diff.wikimedia.org/2025/04/30/our-new-ai-strategy-puts-wikipedias-humans-first/",
+          "publisher": "Wikimedia Foundation",
+          "year": 2025
+        },
+        {
+          "title": "What is AI native?",
+          "url": "https://www.ibm.com/think/topics/ai-native",
+          "publisher": "IBM"
+        },
         {
           "title": "本地影片檔：揭開 AI 原生工作流的面紗",
           "url": "assets/videos/揭開_AI_原生工作流的面紗.mp4"
@@ -556,6 +625,12 @@
       "videoUrl": "assets/videos/AI_推理革命：深入解析_Deep_Think.mp4",
       "sources": [
         {
+          "title": "Google Gemini - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Google_Gemini",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
           "title": "本地影片檔：AI 推理革命：深入解析 Deep Think",
           "url": "assets/videos/AI_推理革命：深入解析_Deep_Think.mp4"
         }
@@ -569,6 +644,17 @@
       "videoUrl": "assets/videos/深度解析：Veo_3.mp4",
       "sources": [
         {
+          "title": "Veo (text-to-video model) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Veo_(text-to-video_model)",
+          "publisher": "Wikipedia",
+          "year": 2026
+        },
+        {
+          "title": "Veo",
+          "url": "https://deepmind.google/models/veo/",
+          "publisher": "Google DeepMind"
+        },
+        {
           "title": "本地影片檔：深度解析：Veo 3",
           "url": "assets/videos/深度解析：Veo_3.mp4"
         }
@@ -581,6 +667,31 @@
       "summary": "Gemini 3.1 持續學習聚焦模型運作中的知識更新與多代理協作，讓 AI 更接近能長期嵌入企業流程並持續改進的基礎設施。",
       "videoUrl": "assets/videos/Gemini_3.mp4",
       "sources": [
+        {
+          "title": "Introducing Nested Learning, a new ML paradigm for continual learning",
+          "url": "https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/",
+          "publisher": "Google Research"
+        },
+        {
+          "title": "Gemini API pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=zh-tw",
+          "publisher": "Google AI for Developers"
+        },
+        {
+          "title": "Gemini 3.1 Pro",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/",
+          "publisher": "Google Blog"
+        },
+        {
+          "title": "Gemini 3 介紹影片",
+          "url": "https://www.youtube.com/watch?v=RIPY6I3Cnoo",
+          "publisher": "YouTube"
+        },
+        {
+          "title": "Google Gemini 介紹",
+          "url": "https://91app.com/blog/google-gemini/",
+          "publisher": "91APP"
+        },
         {
           "title": "本地影片檔：Gemini 3",
           "url": "assets/videos/Gemini_3.mp4"
